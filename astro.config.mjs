@@ -8,7 +8,9 @@ import mdx from "@astrojs/mdx";
 export default defineConfig({
   site: "https://secunit.io",
   output: "static",
-  adapter: cloudflare(),
+  adapter: cloudflare({
+    imageService: "compile",
+  }),
   integrations: [
     react(),
     tailwind({
