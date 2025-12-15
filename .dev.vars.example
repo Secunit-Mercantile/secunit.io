@@ -1,0 +1,5 @@
+# Copy this file to .dev.vars and fill in your values
+# These are used for local development with wrangler
+
+RESEND_API_KEY=re_your_api_key_here
+CONTACT_EMAIL=hello@secunit.io

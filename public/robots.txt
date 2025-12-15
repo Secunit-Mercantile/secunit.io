@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://secunit.io/sitemap-index.xml

@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light mode colors - Astroplate defaults */
+    --color-primary: 17 96 232;        /* #1160e8 - blue */
+    --color-primary-light: 56 139 255; /* #388bff */
+    --color-secondary: 247 147 30;     /* #f7931e - orange */
+    --color-body: 74 74 74;            /* #4a4a4a */
+    --color-border: 229 231 235;       /* #e5e7eb */
+    --color-dark: 34 34 34;            /* #222222 */
+    
+    /* Dark mode colors */
+    --color-darkmode-body: 200 200 200;
+    --color-darkmode-border: 60 60 60;
+    --color-darkmode-primary: 56 139 255;
+    --color-darkmode-secondary: 247 147 30;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-white text-body antialiased transition-colors duration-300;
+    @apply dark:bg-gray-900 dark:text-darkmode-body;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading font-bold text-dark;
+    @apply dark:text-white;
+  }
+
+  a {
+    @apply text-primary hover:text-primary-light transition-colors;
+    @apply dark:text-darkmode-primary;
+  }
+
+  img {
+    @apply max-w-full h-auto;
+  }
+
+  ::selection {
+    @apply bg-primary/20 text-dark;
+  }
+}
+
+@layer components {
+  .container {
+    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center rounded-lg px-6 py-3 font-medium transition-all duration-200;
+  }
+
+  .btn-primary {
+    @apply btn bg-primary text-white hover:bg-primary-light shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30;
+  }
+
+  .btn-secondary {
+    @apply btn bg-secondary text-white hover:opacity-90 shadow-lg shadow-secondary/25;
+  }
+
+  .btn-outline {
+    @apply btn border-2 border-primary text-primary hover:bg-primary hover:text-white;
+    @apply dark:border-darkmode-primary dark:text-darkmode-primary dark:hover:bg-darkmode-primary dark:hover:text-gray-900;
+  }
+
+  .section {
+    @apply py-16 md:py-24;
+  }
+
+  .section-sm {
+    @apply py-12 md:py-16;
+  }
+
+  .card {
+    @apply rounded-xl bg-white p-6 shadow-lg border border-border;
+    @apply dark:bg-gray-800 dark:border-darkmode-border;
+  }
+
+  .input {
+    @apply w-full rounded-lg border border-border bg-white px-4 py-3 text-body placeholder:text-gray-400 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20;
+    @apply dark:bg-gray-800 dark:border-darkmode-border dark:text-darkmode-body dark:placeholder:text-gray-500 dark:focus:border-darkmode-primary dark:focus:ring-darkmode-primary/20;
+  }
+
+  .textarea {
+    @apply input min-h-[150px] resize-y;
+  }
+
+  .select {
+    @apply input cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22%236b7280%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M5.23%207.21a.75.75%200%20011.06.02L10%2011.168l3.71-3.938a.75.75%200%20111.08%201.04l-4.25%204.5a.75.75%200%2001-1.08%200l-4.25-4.5a.75.75%200%2001.02-1.06z%22%20clip-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E')] bg-[length:1.5rem] bg-[right_0.5rem_center] bg-no-repeat pr-10;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+  }
+}

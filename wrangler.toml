@@ -1,0 +1,17 @@
+# Cloudflare Pages configuration
+name = "secunit-website"
+compatibility_date = "2024-12-01"
+pages_build_output_dir = "./dist"
+
+# D1 Database binding for contact form submissions
+[[d1_databases]]
+binding = "DB"
+database_name = "secunit-contacts"
+database_id = "4b4a4589-119f-4a2b-aff7-0de7402ade8d"
+
+# Environment variables (set in Cloudflare dashboard)
+# RESEND_API_KEY - for sending contact form emails
+# CONTACT_EMAIL - destination email for form submissions
+
+[vars]
+CONTACT_EMAIL = "hello@secunit.io"

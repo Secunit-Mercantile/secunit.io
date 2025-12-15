@@ -1,0 +1,280 @@
+---
+import Base from "@/layouts/Base.astro";
+---
+
+<Base 
+  title="Contact" 
+  description="Get in touch with Secunit Mercantile. Tell us about your business challenges and we'll show you how we can help."
+>
+  <!-- Page Header -->
+  <section class="section-sm bg-gray-50 dark:bg-gray-800/50">
+    <div class="container">
+      <div class="mx-auto max-w-2xl text-center">
+        <h1 class="text-4xl font-extrabold md:text-5xl">Let's Talk</h1>
+        <p class="mt-4 text-lg text-body dark:text-darkmode-body">
+          Tell us a bit about your business and what you're looking to accomplish. We'll get back to you within one business day.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Form Section -->
+  <section class="section">
+    <div class="container">
+      <div class="mx-auto max-w-2xl">
+        <form 
+          id="contact-form" 
+          class="space-y-6"
+          action="/api/contact"
+          method="POST"
+        >
+          <!-- Name -->
+          <div>
+            <label for="name" class="mb-2 block text-sm font-medium text-dark dark:text-white">
+              Name <span class="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              class="input"
+              placeholder="Your name"
+            />
+          </div>
+
+          <!-- Email -->
+          <div>
+            <label for="email" class="mb-2 block text-sm font-medium text-dark dark:text-white">
+              Email <span class="text-red-500">*</span>
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              class="input"
+              placeholder="you@company.com"
+            />
+          </div>
+
+          <!-- Company -->
+          <div>
+            <label for="company" class="mb-2 block text-sm font-medium text-dark dark:text-white">
+              Company
+            </label>
+            <input
+              type="text"
+              id="company"
+              name="company"
+              class="input"
+              placeholder="Your company name"
+            />
+          </div>
+
+          <!-- Phone -->
+          <div>
+            <label for="phone" class="mb-2 block text-sm font-medium text-dark dark:text-white">
+              Phone
+            </label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              class="input"
+              placeholder="(555) 123-4567"
+            />
+          </div>
+
+          <!-- How can we help -->
+          <div>
+            <label for="inquiry_type" class="mb-2 block text-sm font-medium text-dark dark:text-white">
+              How can we help? <span class="text-red-500">*</span>
+            </label>
+            <select
+              id="inquiry_type"
+              name="inquiry_type"
+              required
+              class="select"
+            >
+              <option value="">Select an option</option>
+              <option value="AI Enablement">AI Enablement</option>
+              <option value="DevOps & SRE">DevOps & SRE</option>
+              <option value="Security & Compliance">Security & Compliance</option>
+              <option value="General Inquiry">General Inquiry</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <!-- Message -->
+          <div>
+            <label for="message" class="mb-2 block text-sm font-medium text-dark dark:text-white">
+              Tell us more <span class="text-red-500">*</span>
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              required
+              rows="5"
+              class="textarea"
+              placeholder="What challenges are you facing? What are you hoping to accomplish?"
+            ></textarea>
+          </div>
+
+          <!-- Referral source -->
+          <div>
+            <label for="referral_source" class="mb-2 block text-sm font-medium text-dark dark:text-white">
+              How did you hear about us?
+            </label>
+            <select
+              id="referral_source"
+              name="referral_source"
+              class="select"
+            >
+              <option value="">Select an option</option>
+              <option value="Google Search">Google Search</option>
+              <option value="LinkedIn">LinkedIn</option>
+              <option value="Referral">Referral</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <!-- Honeypot (spam prevention) -->
+          <div class="hidden" aria-hidden="true">
+            <input
+              type="text"
+              name="website"
+              tabindex="-1"
+              autocomplete="off"
+            />
+          </div>
+
+          <!-- Submit -->
+          <div>
+            <button type="submit" class="btn-primary w-full">
+              <span id="submit-text">Send Message</span>
+              <svg id="submit-spinner" class="ml-2 hidden h-5 w-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Privacy note -->
+          <p class="text-center text-xs text-gray-500 dark:text-gray-400">
+            We'll only use your information to respond to your inquiry. No spam, ever.
+          </p>
+        </form>
+
+        <!-- Success message (hidden by default) -->
+        <div id="success-message" class="hidden rounded-xl bg-green-50 p-8 text-center dark:bg-green-900/20">
+          <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-green-600 dark:bg-green-900/50 dark:text-green-400">
+            <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-green-800 dark:text-green-300">Message Sent!</h3>
+          <p class="mt-2 text-green-700 dark:text-green-400">
+            Thanks for reaching out. We'll get back to you within one business day.
+          </p>
+        </div>
+
+        <!-- Error message (hidden by default) -->
+        <div id="error-message" class="hidden rounded-xl bg-red-50 p-8 text-center dark:bg-red-900/20">
+          <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red-100 text-red-600 dark:bg-red-900/50 dark:text-red-400">
+            <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-red-800 dark:text-red-300">Something went wrong</h3>
+          <p class="mt-2 text-red-700 dark:text-red-400">
+            Please try again or email us directly at <a href="mailto:hello@secunit.io" class="underline">hello@secunit.io</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Alternative Contact -->
+  <section class="section-sm bg-gray-50 dark:bg-gray-800/50">
+    <div class="container">
+      <div class="mx-auto max-w-2xl">
+        <div class="grid gap-8 md:grid-cols-2">
+          <div class="text-center">
+            <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary dark:text-darkmode-primary">
+              <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h3 class="font-bold text-dark dark:text-white">Prefer email?</h3>
+            <a href="mailto:hello@secunit.io" class="mt-1 text-primary hover:underline dark:text-darkmode-primary">
+              hello@secunit.io
+            </a>
+          </div>
+          
+          <div class="text-center">
+            <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary dark:text-darkmode-primary">
+              <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </div>
+            <h3 class="font-bold text-dark dark:text-white">Location</h3>
+            <p class="mt-1 text-body dark:text-darkmode-body">Charlotte, NC</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Remote-first — we work with clients nationwide</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const submitText = document.getElementById('submit-text');
+  const submitSpinner = document.getElementById('submit-spinner');
+  const successMessage = document.getElementById('success-message');
+  const errorMessage = document.getElementById('error-message');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    // Hide any previous messages
+    successMessage?.classList.add('hidden');
+    errorMessage?.classList.add('hidden');
+    
+    // Show loading state
+    submitText!.textContent = 'Sending...';
+    submitSpinner?.classList.remove('hidden');
+    
+    const formData = new FormData(form);
+    
+    // Check honeypot
+    if (formData.get('website')) {
+      // Bot detected, silently fail
+      return;
+    }
+    
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(Object.fromEntries(formData)),
+      });
+      
+      if (response.ok) {
+        form.classList.add('hidden');
+        successMessage?.classList.remove('hidden');
+      } else {
+        throw new Error('Failed to submit');
+      }
+    } catch (error) {
+      errorMessage?.classList.remove('hidden');
+    } finally {
+      submitText!.textContent = 'Send Message';
+      submitSpinner?.classList.add('hidden');
+    }
+  });
+</script>
