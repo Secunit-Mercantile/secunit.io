@@ -24,16 +24,17 @@ import Base from "@/layouts/Base.astro";
   <section class="section">
     <div class="container">
       <div class="grid items-start gap-12 lg:grid-cols-3">
-        <!-- Photo placeholder -->
+        <!-- Headshot -->
         <div class="lg:col-span-1">
-          <div class="aspect-square overflow-hidden rounded-2xl bg-gradient-to-br from-primary/20 to-secondary/20 dark:from-darkmode-primary/20 dark:to-secondary/20">
-            <div class="flex h-full w-full items-center justify-center">
-              <svg class="h-32 w-32 text-primary/40 dark:text-darkmode-primary/40" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-              </svg>
-            </div>
+          <div class="mx-auto w-52 overflow-hidden rounded-2xl border border-border shadow-sm dark:border-darkmode-border">
+            <img
+              src="/people/matt-headshot.jpg"
+              alt="Matthew Evans headshot"
+              class="h-auto w-full object-cover"
+              loading="lazy"
+            />
           </div>
-          
+        
           <!-- Social links -->
           <div class="mt-6 flex gap-4">
             <a 
