@@ -7,12 +7,8 @@ import mdx from "@astrojs/mdx";
 
 export default defineConfig({
   site: "https://secunit.io",
-  output: "hybrid",
-  adapter: cloudflare({
-    platformProxy: {
-      enabled: true,
-    },
-  }),
+  output: "static",
+  adapter: cloudflare(),
   integrations: [
     react(),
     tailwind({
