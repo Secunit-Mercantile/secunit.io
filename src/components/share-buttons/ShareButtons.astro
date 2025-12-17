@@ -122,11 +122,8 @@ let validtext = linktext.replace(/ /g, "%20");
 }
 
 <style>
-  @import "tailwindcss/theme" theme(reference);
-  @import "@/styles/tailwind-theme.css" theme(reference);
-
   /* share buttons on blog posts */
   .share-button {
-    @apply hover:text-primary-accent text-foreground/80 flex justify-center rounded-md text-sm transition;
+    @apply flex justify-center rounded-md text-sm text-body transition hover:text-primary-light dark:text-darkmode-body dark:hover:text-darkmode-primary;
   }
 </style>

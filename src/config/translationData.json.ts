@@ -11,12 +11,10 @@ import siteDataEn from "./en/siteData.json";
 import navDataEn from "./en/navData.json";
 import faqDataEn from "./en/faqData.json";
 import testimonialDataEn from "./en/testimonialData.json";
-import teamDataEn from "./en/teamData.json";
 import siteDataFr from "./fr/siteData.json";
 import navDataFr from "./fr/navData.json";
 import faqDataFr from "./fr/faqData.json";
 import testimonialDataFr from "./fr/testimonialData.json";
-import teamDataFr from "./fr/teamData.json";
 
 export const dataTranslations = {
   en: {
@@ -24,14 +22,12 @@ export const dataTranslations = {
     navData: navDataEn,
     faqData: faqDataEn,
     testimonialData: testimonialDataEn,
-    teamData: teamDataEn,
   },
   fr: {
     siteData: siteDataFr,
     navData: navDataFr,
     faqData: faqDataFr,
     testimonialData: testimonialDataFr,
-    teamData: teamDataFr,
   },
 } as const;
 

@@ -128,14 +128,13 @@ const currLocale = getLocaleFromUrl(Astro.url);
 </BaseLayout>
 
 <style>
-  @import "tailwindcss/theme" theme(reference);
-  @import "@/styles/tailwind-theme.css" theme(reference);
+  @import "@/styles/tailwind-theme.css";
 
   .overview-heading {
     @apply mt-6 mb-2 text-lg font-medium;
   }
   .overview-link {
-    @apply text-foreground/80 hover:text-foreground my-[.2rem] py-0.5 leading-snug transition;
+    @apply text-body hover:text-dark my-[.2rem] py-0.5 leading-snug transition dark:text-darkmode-body dark:hover:text-white;
   }
 </style>
 

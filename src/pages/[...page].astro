@@ -6,6 +6,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 
 // components
 import ExternalLink from "@/components/markdown-components/ExternalLink.astro";
+import Admonition from "@/components/admonition/Admonition.astro";
 
 // utils
 import { filterCollectionByLanguage } from "@/js/localeUtils";
@@ -44,7 +45,7 @@ const { title, description } = page.data;
       <p class="text-muted-foreground">{description}</p>
     </div>
     <div class="markdown-content mx-auto mb-16 max-w-3xl">
-      <Content components={{ a: ExternalLink }} />
+      <Content components={{ a: ExternalLink, Admonition: Admonition }} />
     </div>
   </div>
 </BaseLayout>
