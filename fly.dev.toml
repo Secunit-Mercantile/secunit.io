@@ -1,7 +1,7 @@
-# fly.toml - Fly.io configuration for Secunit Website
-# See https://fly.io/docs/reference/configuration/ for reference
+# fly.dev.toml - Fly.io configuration for Dev Environment
+# Deploy with: fly deploy --config fly.dev.toml
 
-app = "secunit-io"
+app = "secunit-io-dev"
 primary_region = "iad"
 
 [build]
@@ -10,15 +10,15 @@ primary_region = "iad"
 [env]
   HOST = "0.0.0.0"
   PORT = "4321"
-  NODE_ENV = "production"
-  ASTRO_SITE_URL = "https://secunit.io"
+  NODE_ENV = "development"
+  ASTRO_SITE_URL = "https://dev.secunit.io"
 
 [http_service]
   internal_port = 4321
   force_https = true
   auto_stop_machines = "stop"
   auto_start_machines = true
-  min_machines_running = 1
+  min_machines_running = 0  # Can scale to zero in dev
   processes = ["app"]
 
   [http_service.concurrency]
@@ -34,10 +34,11 @@ primary_region = "iad"
 # Health check
 [checks]
   [checks.alive]
-    grace_period = "15s"
-    interval = "15s"
+    grace_period = "10s"
+    interval = "30s"
     method = "GET"
     path = "/api/live"
     port = 4321
     timeout = "5s"
     type = "http"
+

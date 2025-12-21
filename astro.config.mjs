@@ -7,7 +7,7 @@ import icon from "astro-icon";
 import node from "@astrojs/node";
 
 export default defineConfig({
-  site: "https://secunit.io",
+  site: import.meta.env.ASTRO_SITE_URL || "https://secunit.io",
   output: "server",
   adapter: node({
     mode: "standalone",
