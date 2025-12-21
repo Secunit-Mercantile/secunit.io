@@ -1,44 +1,22 @@
-# fly.dev.toml - Fly.io configuration for Dev Environment
-# Deploy with: fly deploy --config fly.dev.toml
+# fly.toml app configuration file generated for secunit-io-dev-long-breeze-1645 on 2025-12-20T19:59:54-05:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
-app = "secunit-io-dev"
-primary_region = "iad"
+app = 'secunit-io-dev-long-breeze-1645'
+primary_region = 'iad'
 
 [build]
-  dockerfile = "Dockerfile"
-
-[env]
-  HOST = "0.0.0.0"
-  PORT = "4321"
-  NODE_ENV = "development"
-  ASTRO_SITE_URL = "https://dev.secunit.io"
 
 [http_service]
   internal_port = 4321
   force_https = true
-  auto_stop_machines = "stop"
+  auto_stop_machines = 'stop'
   auto_start_machines = true
-  min_machines_running = 0  # Can scale to zero in dev
-  processes = ["app"]
-
-  [http_service.concurrency]
-    type = "connections"
-    hard_limit = 250
-    soft_limit = 200
+  min_machines_running = 0
+  processes = ['app']
 
 [[vm]]
-  memory = "256mb"
-  cpu_kind = "shared"
+  memory = '1gb'
   cpus = 1
-
-# Health check
-[checks]
-  [checks.alive]
-    grace_period = "10s"
-    interval = "30s"
-    method = "GET"
-    path = "/api/live"
-    port = 4321
-    timeout = "5s"
-    type = "http"
-
+  memory_mb = 1024
