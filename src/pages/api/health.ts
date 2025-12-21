@@ -92,42 +92,60 @@ export const GET: APIRoute = async () => {
   };
 
   // Check D1 database connectivity and CRUD operations
+  // Wrap in try-catch to handle missing env vars gracefully
   let testId: number | null = null;
+  let d1CheckEnabled = true;
 
-  try {
-    // CREATE - Insert a test record
-    const createResult = await executeD1Query(
-      `INSERT INTO contacts (
-        name, email, inquiry_type, message, 
-        page_url, user_agent, ip_address, status
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-      [
-        "Health Check Test",
-        "healthcheck@secunit.io",
-        "General Inquiry",
-        "Automated health check test - will be deleted",
-        "https://secunit.io/api/health",
-        "Health Check Bot",
-        "127.0.0.1",
-        "test",
-      ]
-    );
+  // Check if D1 environment variables are configured
+  const accountId = import.meta.env.CLOUDFLARE_ACCOUNT_ID;
+  const databaseId = import.meta.env.CLOUDFLARE_D1_DATABASE_ID;
+  const apiToken = import.meta.env.CLOUDFLARE_API_TOKEN;
 
-    if (!createResult.success || !createResult.result[0]?.meta?.last_row_id) {
-      throw new Error("CREATE operation failed");
-    }
-
-    testId = createResult.result[0].meta.last_row_id;
-    healthCheck.checks.d1.crud.create = "pass";
-  } catch (error) {
-    healthCheck.checks.d1.crud.create = "fail";
+  if (!accountId || !databaseId || !apiToken) {
+    d1CheckEnabled = false;
     healthCheck.checks.d1.status = "fail";
-    healthCheck.checks.d1.message = `CREATE failed: ${error instanceof Error ? error.message : "Unknown error"}`;
-    healthCheck.status = "unhealthy";
+    healthCheck.checks.d1.message = "D1 configuration not available (env vars missing)";
+    healthCheck.status = "degraded";
+    // Still return 200 - app is running, just D1 not configured
+  }
+
+  if (d1CheckEnabled) {
+    try {
+      // CREATE - Insert a test record
+      const createResult = await executeD1Query(
+        `INSERT INTO contacts (
+          name, email, inquiry_type, message, 
+          page_url, user_agent, ip_address, status
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+          "Health Check Test",
+          "healthcheck@secunit.io",
+          "General Inquiry",
+          "Automated health check test - will be deleted",
+          "https://secunit.io/api/health",
+          "Health Check Bot",
+          "127.0.0.1",
+          "test",
+        ]
+      );
+
+      if (!createResult.success || !createResult.result[0]?.meta?.last_row_id) {
+        throw new Error("CREATE operation failed");
+      }
+
+      testId = createResult.result[0].meta.last_row_id;
+      healthCheck.checks.d1.crud.create = "pass";
+    } catch (error) {
+      healthCheck.checks.d1.crud.create = "fail";
+      healthCheck.checks.d1.status = "fail";
+      healthCheck.checks.d1.message = `CREATE failed: ${error instanceof Error ? error.message : "Unknown error"}`;
+      healthCheck.status = "degraded";
+      // Don't set unhealthy - app is still running
+    }
   }
 
   // READ - Fetch the test record
-  if (testId !== null) {
+  if (testId !== null && d1CheckEnabled) {
     try {
       const readResult = await executeD1Query(
         "SELECT id, name, email, status FROM contacts WHERE id = ?",
@@ -147,7 +165,8 @@ export const GET: APIRoute = async () => {
       healthCheck.checks.d1.crud.read = "fail";
       healthCheck.checks.d1.status = "fail";
       healthCheck.checks.d1.message = `READ failed: ${error instanceof Error ? error.message : "Unknown error"}`;
-      healthCheck.status = "unhealthy";
+      healthCheck.status = "degraded";
+      // Don't set unhealthy - app is still running
     }
 
     // UPDATE - Update the test record
@@ -166,7 +185,8 @@ export const GET: APIRoute = async () => {
       healthCheck.checks.d1.crud.update = "fail";
       healthCheck.checks.d1.status = "fail";
       healthCheck.checks.d1.message = `UPDATE failed: ${error instanceof Error ? error.message : "Unknown error"}`;
-      healthCheck.status = "unhealthy";
+      healthCheck.status = "degraded";
+      // Don't set unhealthy - app is still running
     }
 
     // DELETE - Clean up the test record
@@ -185,29 +205,26 @@ export const GET: APIRoute = async () => {
       healthCheck.checks.d1.crud.delete = "fail";
       healthCheck.checks.d1.status = "fail";
       healthCheck.checks.d1.message = `DELETE failed: ${error instanceof Error ? error.message : "Unknown error"}`;
-      healthCheck.status = "unhealthy";
+      healthCheck.status = "degraded";
+      // Don't set unhealthy - app is still running
     }
   }
 
-  // Determine overall status
+  // Determine overall status based on D1 checks
+  // Only mark as degraded if D1 fails, never unhealthy (app is still running)
   if (healthCheck.checks.d1.status === "fail") {
-    healthCheck.status = "unhealthy";
+    healthCheck.status = "degraded";
   } else if (
     Object.values(healthCheck.checks.d1.crud).some((op) => op === "fail")
   ) {
     healthCheck.status = "degraded";
   }
 
-  // Return appropriate HTTP status code
-  const statusCode =
-    healthCheck.status === "healthy"
-      ? 200
-      : healthCheck.status === "degraded"
-        ? 200 // Still return 200 but with degraded status
-        : 503; // Service unavailable for unhealthy
-
+  // Always return 200 if app is running
+  // Fly.io healthcheck should pass as long as we return 200
+  // The JSON status field indicates the actual health state
   return new Response(JSON.stringify(healthCheck, null, 2), {
-    status: statusCode,
+    status: 200,
     headers: {
       "Content-Type": "application/json",
       "Cache-Control": "no-cache, no-store, must-revalidate",

@@ -33,10 +33,10 @@ primary_region = "iad"
 # Health check
 [checks]
   [checks.alive]
-    grace_period = "10s"
-    interval = "30s"
+    grace_period = "15s"
+    interval = "15s"
     method = "GET"
-    path = "/api/health"
+    path = "/api/live"
     port = 4321
-    timeout = "10s"
+    timeout = "5s"
     type = "http"
