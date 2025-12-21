@@ -1,6 +1,6 @@
 # CONTEXT.md - Secunit Mercantile Website
 
-**Last Updated:** December 17, 2025  
+**Last Updated:** December 20, 2025  
 **Live Site:** https://secunit.io  
 **Purpose:** Enterprise-grade security, DevOps, SRE, and AI consulting for small and mid-sized businesses
 
@@ -62,12 +62,12 @@ The site features:
 - **Keystatic** - Git-based CMS (configured but optional)
 
 ### Deployment & Backend
-- **Cloudflare Pages** - Static hosting
-- **Cloudflare Pages Functions** - Serverless API endpoints
-- **Cloudflare D1** - SQLite database for contact form
+- **Fly.io** - Container hosting with SSR
+- **Cloudflare D1** - SQLite database for contact form (via REST API)
 - **Resend API** - Email delivery service
 
 ### Build Tools
+- **Bun** - Package manager and runtime
 - **Prettier** - Code formatting
 - **ESLint** - Linting (configured via eslint.config.mjs)
 
@@ -77,14 +77,15 @@ The site features:
 
 ### Build Process
 1. Astro compiles `.astro`, `.tsx`, and `.mdx` files
-2. Static HTML/CSS/JS generated to `/dist` directory
-3. Cloudflare Pages serves static files
-4. Cloudflare Pages Functions handle API routes (`/functions/api/*`)
+2. Server bundle generated to `/dist` directory
+3. Docker container runs Node.js server on Fly.io
+4. API routes handled via Astro SSR endpoints (`/api/*`)
 
 ### Rendering Strategy
-- **Output:** `static` (full static site generation)
-- **No SSR** - All pages pre-rendered at build time
-- **Client-side JS** - Minimal, only for interactive features (theme toggle, mobile menu, contact form)
+- **Output:** `server` (SSR with Node.js adapter)
+- **Hybrid Rendering** - Static content prerendered at build time, API routes rendered on-demand
+- **Prerendered Pages:** Blog posts, careers, categories, and other content pages
+- **SSR Pages:** API routes (`/api/contact`) and any pages without `prerender = true`
 
 ### Data Flow
 
@@ -97,8 +98,8 @@ Content (MDX/JSON)
 Contact Form Submission
   → Client-side JS
   → POST /api/contact
-  → Cloudflare Pages Function
-  → D1 Database + Resend Email
+  → Astro API Route (SSR)
+  → D1 Database (via REST API) + Resend Email
   → Response to client
 ```
 
@@ -181,7 +182,9 @@ secunit-website/
 ├── astro.config.mjs             # Astro configuration
 ├── tailwind.config.mjs          # Tailwind configuration
 ├── tsconfig.json                # TypeScript configuration
-├── wrangler.toml                # Cloudflare configuration
+├── fly.toml                     # Fly.io configuration
+├── Dockerfile                   # Docker build configuration
+├── wrangler.toml                # Cloudflare D1 CLI config (for database management)
 ├── netlify.toml                 # Legacy Netlify config (not used)
 ├── keystatic.config.tsx         # Keystatic CMS config
 └── starwind.config.json         # Starwind component registry
@@ -311,18 +314,18 @@ Content goes here...
 - Loading state with spinner
 - Success/error message display
 
-### Backend (`functions/api/contact.ts`)
+### Backend (`src/pages/api/contact.ts`)
 
-**Cloudflare Pages Function:**
-- Type: `onRequestPost`
-- Environment variables: `DB` (D1), `RESEND_API_KEY`, `CONTACT_EMAIL`
+**Astro API Route (SSR):**
+- Type: `APIRoute` with `POST` handler
+- Connects to Cloudflare D1 via REST API
 
 **Process Flow:**
 1. Validate required fields
 2. Check honeypot (silent fail if triggered)
 3. Validate email format
-4. Extract metadata (IP, user agent, referrer)
-5. Insert to D1 database
+4. Extract metadata (IP via `x-forwarded-for` or `fly-client-ip`, user agent, referrer)
+5. Insert to D1 database via Cloudflare REST API
 6. Send email via Resend API
 7. Return JSON response with contact_id
 
@@ -349,14 +352,17 @@ CREATE TABLE contacts (
 
 ### Environment Variables
 
-**Cloudflare Pages Environment Variables:**
+**Fly.io Secrets (set via `fly secrets set`):**
 - `RESEND_API_KEY` - Resend API key for email sending
-- `CONTACT_EMAIL` - Destination email (default: whyhellothere@secunit.io)
+- `CONTACT_EMAIL` - Destination email (default: hello@secunit.io)
+- `CLOUDFLARE_ACCOUNT_ID` - Cloudflare account ID for D1 access
+- `CLOUDFLARE_D1_DATABASE_ID` - D1 database ID (`4b4a4589-119f-4a2b-aff7-0de7402ade8d`)
+- `CLOUDFLARE_API_TOKEN` - Cloudflare API token with D1 read/write permissions
 
-**Cloudflare D1 Binding:**
-- Variable name: `DB`
+**Cloudflare D1 Database:**
 - Database name: `secunit-contacts`
 - Database ID: `4b4a4589-119f-4a2b-aff7-0de7402ade8d`
+- Access: Via Cloudflare REST API from Fly.io
 
 ### Exporting Contacts
 
@@ -372,43 +378,81 @@ wrangler d1 execute secunit-contacts --command="SELECT * FROM contacts" --json >
 
 ## 🚀 Deployment
 
-### Cloudflare Pages
+### Fly.io
 
-**Configuration:**
-- Framework preset: Astro
-- Build command: `yarn build` or `npm run build`
-- Build output: `dist/`
-- Node version: 18+ (specified by Cloudflare)
+**Configuration (`fly.toml`):**
+- App name: `secunit-io`
+- Primary region: `iad` (Ashburn, Virginia)
+- VM: 512MB RAM, shared CPU
+- Auto-scaling: Scales to zero when idle
 
 **Custom Domain:**
 - Primary: `secunit.io`
 - WWW redirect: `www.secunit.io` → `secunit.io`
+- Configure via `fly certs add secunit.io`
 
-**Environment Setup:**
-1. Connect GitHub repository
-2. Set environment variables (RESEND_API_KEY, CONTACT_EMAIL)
-3. Bind D1 database (`DB` → `secunit-contacts`)
-4. Configure custom domain
-5. Deploy automatically on push to `main`
+**Initial Deployment:**
+```bash
+# Install Fly CLI
+curl -L https://fly.io/install.sh | sh
+
+# Login to Fly.io
+fly auth login
+
+# Launch app (first time only)
+fly launch --no-deploy
+
+# Set secrets
+fly secrets set RESEND_API_KEY="your-resend-api-key"
+fly secrets set CONTACT_EMAIL="hello@secunit.io"
+fly secrets set CLOUDFLARE_ACCOUNT_ID="your-account-id"
+fly secrets set CLOUDFLARE_D1_DATABASE_ID="4b4a4589-119f-4a2b-aff7-0de7402ade8d"
+fly secrets set CLOUDFLARE_API_TOKEN="your-d1-api-token"
+
+# Deploy
+fly deploy
+```
+
+**Subsequent Deployments:**
+```bash
+fly deploy
+```
 
 ### Build Process
 
 ```bash
 # Install dependencies
-yarn install
+bun install
 
 # Build for production
-yarn build
+bun run build
 
-# Preview production build locally
-yarn preview
+# Start production server locally
+bun run start
+
+# Preview with Astro dev server
+bun run dev
 ```
 
 **Build Output:**
-- Static HTML/CSS/JS in `dist/`
-- Cloudflare Pages Functions in `functions/` (automatically detected)
+- SSR server bundle in `dist/server/`
+- Client assets in `dist/client/`
 - Sitemap generated
 - RSS feed generated
+
+### Docker Build
+
+The `Dockerfile` uses a multi-stage build:
+1. **Builder stage:** Uses `oven/bun:1-alpine` to install dependencies and build Astro
+2. **Runner stage:** Minimal Node.js image with only production files
+
+```bash
+# Build Docker image locally
+docker build -t secunit-website .
+
+# Run locally
+docker run -p 4321:4321 secunit-website
+```
 
 ---
 
@@ -443,10 +487,28 @@ yarn lint
 
 ### Testing Contact Form Locally
 
-**Note:** Contact form requires Cloudflare environment variables and D1 database. For local testing:
-1. Use `wrangler dev` with local D1 binding
-2. Or deploy to Cloudflare Pages preview environment
+**Note:** Contact form requires environment variables for D1 and Resend. For local testing:
+1. Create a `.env` file with required variables:
+   ```
+   CLOUDFLARE_ACCOUNT_ID=your-account-id
+   CLOUDFLARE_D1_DATABASE_ID=4b4a4589-119f-4a2b-aff7-0de7402ade8d
+   CLOUDFLARE_API_TOKEN=your-api-token
+   RESEND_API_KEY=your-resend-key
+   CONTACT_EMAIL=test@example.com
+   ```
+2. Run `pnpm dev` and test the form
 3. Or mock the API response for frontend testing
+
+### Managing D1 Database
+
+Use the Wrangler CLI to manage the D1 database:
+```bash
+# Query contacts
+wrangler d1 execute secunit-contacts --command="SELECT * FROM contacts WHERE status = 'new'"
+
+# Export to JSON
+wrangler d1 execute secunit-contacts --command="SELECT * FROM contacts" --json > contacts.json
+```
 
 ---
 
@@ -464,11 +526,14 @@ yarn lint
 
 ### Performance
 
-- Static site generation (no runtime server)
-- Minimal JavaScript
+- **Hybrid Rendering:** Static content prerendered at build time for instant page loads
+- **SSR for Dynamic Content:** API routes and dynamic pages rendered on-demand
+- Auto-scaling to zero when idle (cost efficient)
+- Minimal client-side JavaScript
 - Optimized images (manual optimization)
 - Preconnect to external resources (Google Fonts)
 - Dark mode without flash (inline script)
+- Edge deployment available via Fly.io regions
 
 ### Accessibility
 
@@ -621,9 +686,16 @@ yarn lint
 
 ### `astro.config.mjs`
 - Site URL: `https://secunit.io`
-- Output: `static`
+- Output: `server` (SSR mode)
+- Adapter: `@astrojs/node` (standalone mode)
 - Integrations: react, tailwind, sitemap, mdx
 - Markdown: Shiki theme (github-dark)
+
+### `fly.toml`
+- App name: `secunit-io`
+- Primary region: `iad`
+- Internal port: 4321
+- Auto-scaling enabled
 
 ### `tailwind.config.mjs`
 - Content: All source files in `src/`
@@ -712,9 +784,10 @@ yarn lint
 
 ### Security Considerations
 
-1. **Content Security Policy** - Consider adding CSP headers via Cloudflare
+1. **Content Security Policy** - Consider adding CSP headers via Fly.io or Astro middleware
 2. **Rate Limiting** - Consider adding rate limiting to contact form endpoint
 3. **Input Sanitization** - Form inputs are validated but not sanitized before email display
+4. **API Token Security** - Cloudflare API token should have minimal D1 permissions only
 
 ### Scalability Considerations
 

@@ -12,6 +12,8 @@ import Admonition from "@/components/admonition/Admonition.astro";
 import { filterCollectionByLanguage } from "@/js/localeUtils";
 import { defaultLocale } from "@/config/siteSettings.json";
 
+export const prerender = true;
+
 export async function getStaticPaths() {
   const otherPages: CollectionEntry<"otherPages">[] = await getCollection(
     "otherPages",

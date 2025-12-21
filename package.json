@@ -8,12 +8,14 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "start": "node ./dist/server/entry.mjs",
     "astro": "astro",
     "format": "prettier -w .",
     "lint": "eslint . --ext .astro,.js,.jsx,.ts,.tsx"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
+    "@astrojs/node": "^9.1.3",
     "@astrojs/react": "^4.4.2",
     "@astrojs/rss": "^4.0.14",
     "@astrojs/sitemap": "^3.6.0",
@@ -41,6 +43,7 @@
     "prettier": "^3.7.4",
     "prettier-plugin-astro": "^0.14.0",
     "prettier-plugin-tailwindcss": "^0.6.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "@types/bun": "latest"
   }
 }

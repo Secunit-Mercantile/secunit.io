@@ -1,0 +1,40 @@
+# Dependencies
+node_modules
+
+# Build output
+dist
+
+# Git
+.git
+.gitignore
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment files (secrets set via fly secrets)
+.env
+.env.*
+
+# Documentation
+*.md
+!README.md
+
+# Development files
+.eslintcache
+*.log
+
+# Cloudflare (no longer needed)
+wrangler.toml
+functions/
+
+# Misc
+.prettierignore
+.prettierrc
+

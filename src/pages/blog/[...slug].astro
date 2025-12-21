@@ -23,6 +23,8 @@ import { siteSettings } from "@/config/siteSettings.json";
 import { getAllPosts } from "@/js/blogUtils";
 import { defaultLocale } from "@/config/siteSettings.json";
 
+export const prerender = true;
+
 export async function getStaticPaths() {
   const posts = await getAllPosts(defaultLocale);
 
