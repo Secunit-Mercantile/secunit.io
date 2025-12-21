@@ -19,17 +19,17 @@ export const prerender = true;
 
 // generate pagination for tag pages if there are a bunch of posts for a single tag
 export async function getStaticPaths() {
-  const posts = await getAllPosts(defaultLocale);
-  const allCategories = posts.map((post) => post.data.categories).flat();
-  const filteredCategories = allCategories.filter(
-    (category): category is string => typeof category === "string",
-  );
-  const countedCategories = countItems(filteredCategories);
-  const processedCategories = sortByValue(countedCategories);
+ const posts = await getAllPosts(defaultLocale);
+ const allCategories = posts.map((post) => post.data.categories).flat();
+ const filteredCategories = allCategories.filter(
+  (category): category is string => typeof category === "string",
+ );
+ const countedCategories = countItems(filteredCategories);
+ const processedCategories = sortByValue(countedCategories);
 
-  return processedCategories.map(([category]) => ({
-    params: { category: category },
-  }));
+ return processedCategories.map(([category]) => ({
+  params: { category: category },
+ }));
 }
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
@@ -41,37 +41,37 @@ const { category } = Astro.params as Params;
 const currLocale = getLocaleFromUrl(Astro.url);
 const posts = await getAllPosts(currLocale);
 const filteredPosts = posts.filter((post) => {
-  if (!post.data.categories) return false;
-  // make sure to slugify them for comparison
-  const slugifiedCategory = post.data.categories
-    .filter((category): category is string => typeof category === "string")
-    .map((category) => slugify(category));
+ if (!post.data.categories) return false;
+ // make sure to slugify them for comparison
+ const slugifiedCategory = post.data.categories
+  .filter((category): category is string => typeof category === "string")
+  .map((category) => slugify(category));
 
-  return slugifiedCategory.includes(category);
+ return slugifiedCategory.includes(category);
 });
 ---
 
 <BaseLayout
-  title={`Blog posts about ${humanize(category)}`}
-  description={`My blog posts on ${humanize(category)} to help you on your journey`}
+ title={`Blog posts about ${humanize(category)}`}
+ description={`My blog posts on ${humanize(category)} to help you on your journey`}
 >
-  <div class="site-container">
-    <section class="overflow-hidden pt-10 pb-20">
-      <div class="mx-auto mb-10 text-center md:max-w-4xl">
-        <span class="badge">Zenith Card</span>
-        <h2 class="h2">Posts on {humanize(category)}</h2>
-      </div>
-      <div class="mb-10 flex items-center justify-center">
-        <CategoryCloud showCount={true} />
-      </div>
-      <div class="-m-10 mb-10 flex flex-wrap">
-        <PostCardLarge post={filteredPosts[0]} />
-        <div class="w-full p-10 md:w-1/2">
-          <div class="-m-4 flex flex-wrap">
-            {filteredPosts.slice(1).map((post) => <PostCardSmall post={post} />)}
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
+ <div class="site-container">
+  <section class="overflow-hidden pt-10 pb-20">
+   <div class="mx-auto mb-10 text-center md:max-w-4xl">
+    <span class="badge">Zenith Card</span>
+    <h2 class="h2">Posts on {humanize(category)}</h2>
+   </div>
+   <div class="mb-10 flex items-center justify-center">
+    <CategoryCloud showCount={true} />
+   </div>
+   <div class="-m-10 mb-10 flex flex-wrap">
+    <PostCardLarge post={filteredPosts[0]} />
+    <div class="w-full p-10 md:w-1/2">
+     <div class="-m-4 flex flex-wrap">
+      {filteredPosts.slice(1).map((post) => <PostCardSmall post={post} />)}
+     </div>
+    </div>
+   </div>
+  </section>
+ </div>
 </BaseLayout>

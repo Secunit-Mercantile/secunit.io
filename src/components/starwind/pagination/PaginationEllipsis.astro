@@ -6,30 +6,30 @@ import { tv, type VariantProps } from "tailwind-variants";
 type Props = HTMLAttributes<"span"> & VariantProps<typeof paginationEllipsis>;
 
 export const paginationEllipsis = tv({
-  base: "flex items-center justify-center",
-  variants: {
-    size: {
-      "icon-sm": "size-9",
-      icon: "size-11",
-      "icon-lg": "size-12",
-    },
+ base: "flex items-center justify-center",
+ variants: {
+  size: {
+   "icon-sm": "size-9",
+   icon: "size-11",
+   "icon-lg": "size-12",
   },
-  defaultVariants: { size: "icon" },
+ },
+ defaultVariants: { size: "icon" },
 });
 
 const { class: className, size, ...rest } = Astro.props;
 ---
 
 <span
-  aria-hidden
-  class={paginationEllipsis({ size, class: className })}
-  data-slot="pagination-ellipsis"
-  {...rest}
+ aria-hidden
+ class={paginationEllipsis({ size, class: className })}
+ data-slot="pagination-ellipsis"
+ {...rest}
 >
-  <slot name="icon">
-    <Dots class="size-4" />
-  </slot>
-  <slot>
-    <span class="sr-only">More pages</span>
-  </slot>
+ <slot name="icon">
+  <Dots class="size-4" />
+ </slot>
+ <slot>
+  <span class="sr-only">More pages</span>
+ </slot>
 </span>

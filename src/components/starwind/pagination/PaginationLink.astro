@@ -5,9 +5,9 @@ import type { VariantProps } from "tailwind-variants";
 import { ButtonVariants } from "@/components/starwind/button";
 
 type Props = HTMLAttributes<"a"> &
-  Omit<VariantProps<typeof ButtonVariants.button>, "variant"> & {
-    isActive?: boolean;
-  };
+ Omit<VariantProps<typeof ButtonVariants.button>, "variant"> & {
+  isActive?: boolean;
+ };
 
 export const paginationLink = ButtonVariants.button;
 
@@ -15,10 +15,10 @@ const { class: className, isActive, size = "icon", ...rest } = Astro.props;
 ---
 
 <a
-  aria-current={isActive ? "page" : undefined}
-  class={ButtonVariants.button({ variant: isActive ? "outline" : "ghost", size, class: className })}
-  data-slot="pagination-link"
-  {...rest}
+ aria-current={isActive ? "page" : undefined}
+ class={ButtonVariants.button({ variant: isActive ? "outline" : "ghost", size, class: className })}
+ data-slot="pagination-link"
+ {...rest}
 >
-  <slot />
+ <slot />
 </a>

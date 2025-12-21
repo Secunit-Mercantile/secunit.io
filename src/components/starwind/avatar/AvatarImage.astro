@@ -16,34 +16,34 @@ type Props = HTMLAttributes<"img"> & (WithSrc | WithImage);
 const { src, image, alt, class: className, width, height, ...rest } = Astro.props;
 
 if (!src && !image) {
-  throw new Error("Either 'src' or 'image' is required for an avatar image.");
+ throw new Error("Either 'src' or 'image' is required for an avatar image.");
 }
 ---
 
 {
-  src && (
-    // eslint-disable-next-line astro/jsx-a11y/no-noninteractive-element-interactions
-    <img
-      src={src}
-      alt={alt}
-      class={avatarImage({ class: className })}
-      width={64}
-      height={64}
-      onerror="this.style.display='none'"
-      data-slot="avatar-image"
-      {...rest}
-    />
-  )
+ src && (
+  // eslint-disable-next-line astro/jsx-a11y/no-noninteractive-element-interactions
+  <img
+   src={src}
+   alt={alt}
+   class={avatarImage({ class: className })}
+   width={64}
+   height={64}
+   onerror="this.style.display='none'"
+   data-slot="avatar-image"
+   {...rest}
+  />
+ )
 }
 {
-  image && (
-    <Image
-      src={image}
-      alt={alt}
-      class={avatarImage({ class: className })}
-      width={64}
-      data-slot="avatar-image"
-      {...rest}
-    />
-  )
+ image && (
+  <Image
+   src={image}
+   alt={alt}
+   class={avatarImage({ class: className })}
+   width={64}
+   data-slot="avatar-image"
+   {...rest}
+  />
+ )
 }

@@ -7,15 +7,15 @@ import { Separator } from "@/components/starwind/separator";
 type Props = ComponentProps<typeof Separator>;
 
 export const itemSeparator = tv({
-  base: "my-0",
+ base: "my-0",
 });
 
 const { class: className, orientation = "horizontal", ...rest } = Astro.props;
 ---
 
 <Separator
-  orientation={orientation}
-  class={itemSeparator({ class: className })}
-  data-slot="item-separator"
-  {...rest}
+ orientation={orientation}
+ class={itemSeparator({ class: className })}
+ data-slot="item-separator"
+ {...rest}
 />

@@ -26,12 +26,12 @@ import { defaultLocale } from "@/config/siteSettings.json";
 export const prerender = true;
 
 export async function getStaticPaths() {
-  const posts = await getAllPosts(defaultLocale);
+ const posts = await getAllPosts(defaultLocale);
 
-  return posts.map((post) => ({
-    params: { slug: post.id },
-    props: post,
-  }));
+ return posts.map((post) => ({
+  params: { slug: post.id },
+  props: post,
+ }));
 }
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
@@ -40,30 +40,30 @@ const { Content, headings } = await render(post);
 ---
 
 <BlogLayout post={post} headings={headings}>
-  {
-    siteSettings.copyLinkButtons && (
-      <Content
-        components={{
-          a: ExternalLink,
-          h1: CustomH1,
-          h2: CustomH2,
-          h3: CustomH3,
-          h4: CustomH4,
-          h5: CustomH5,
-          h6: CustomH6,
-          Admonition: Admonition,
-        }}
-      />
-    )
-  }
-  {
-    !siteSettings.copyLinkButtons && (
-      <Content
-        components={{
-          a: ExternalLink,
-          Admonition: Admonition,
-        }}
-      />
-    )
-  }
+ {
+  siteSettings.copyLinkButtons && (
+   <Content
+    components={{
+     a: ExternalLink,
+     h1: CustomH1,
+     h2: CustomH2,
+     h3: CustomH3,
+     h4: CustomH4,
+     h5: CustomH5,
+     h6: CustomH6,
+     Admonition: Admonition,
+    }}
+   />
+  )
+ }
+ {
+  !siteSettings.copyLinkButtons && (
+   <Content
+    components={{
+     a: ExternalLink,
+     Admonition: Admonition,
+    }}
+   />
+  )
+ }
 </BlogLayout>

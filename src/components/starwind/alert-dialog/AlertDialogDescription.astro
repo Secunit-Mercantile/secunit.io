@@ -10,9 +10,9 @@ const { class: className, ...rest } = Astro.props;
 ---
 
 <p
-  class={alertDialogDescription({ class: className })}
-  data-slot="alert-dialog-description"
-  {...rest}
+ class={alertDialogDescription({ class: className })}
+ data-slot="alert-dialog-description"
+ {...rest}
 >
-  <slot />
+ <slot />
 </p>

@@ -4,19 +4,21 @@
 
 @layer base {
   :root {
-    /* Light mode colors - Secunit brand colors */
-    --color-primary: 196 216 46;       /* #C4D82E - lime green from logo */
-    --color-primary-light: 215 232 92; /* #D7E85C - lighter lime */
-    --color-secondary: 82 88 93;       /* #52585D - dark gray from logo */
-    --color-body: 74 74 74;            /* #4a4a4a */
+    /* PlanetScale-inspired color scheme */
+    /* Light mode - minimal, mostly dark */
+    --color-primary: 34 197 94;        /* #22c55e - green accent */
+    --color-primary-light: 74 222 128; /* #4ade80 - lighter green */
+    --color-secondary: 59 130 246;     /* #3b82f6 - blue accent */
+    --color-body: 107 114 128;         /* #6b7280 - gray text */
     --color-border: 229 231 235;       /* #e5e7eb */
-    --color-dark: 34 34 34;            /* #222222 */
+    --color-dark: 17 24 39;            /* #111827 - very dark */
     
-    /* Dark mode colors */
-    --color-darkmode-body: 200 200 200;
-    --color-darkmode-border: 60 60 60;
-    --color-darkmode-primary: 215 232 92;  /* lighter lime for dark mode */
-    --color-darkmode-secondary: 140 147 153; /* lighter gray for dark mode */
+    /* Dark mode - PlanetScale aesthetic */
+    --color-darkmode-body: 209 213 219; /* #d1d5db - light gray text */
+    --color-darkmode-border: 55 65 81;   /* #374151 - dark border */
+    --color-darkmode-primary: 34 197 94; /* #22c55e - green accent */
+    --color-darkmode-secondary: 59 130 246; /* #3b82f6 - blue accent */
+    --color-darkmode-bg: 9 9 11;         /* #09090b - very dark background */
   }
 
   html {
@@ -24,18 +26,22 @@
   }
 
   body {
-    @apply bg-white text-body antialiased transition-colors duration-300;
-    @apply dark:bg-gray-900 dark:text-darkmode-body;
+    @apply bg-white text-body transition-colors duration-300;
+    @apply dark:bg-[#09090b] dark:text-darkmode-body;
+    @apply text-sm;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    letter-spacing: -0.01em;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading font-bold text-dark;
     @apply dark:text-white;
+    letter-spacing: -0.02em;
   }
 
   a {
     @apply text-primary hover:text-primary-light transition-colors;
-    @apply dark:text-darkmode-primary;
+    @apply dark:text-darkmode-primary dark:hover:text-primary-light;
   }
 
   img {
@@ -57,7 +63,8 @@
   }
 
   .btn-primary {
-    @apply btn bg-secondary text-white font-semibold hover:bg-gray-700 shadow-md hover:shadow-lg transition-all;
+    @apply btn bg-primary text-white font-semibold hover:bg-primary-light transition-all;
+    @apply dark:bg-darkmode-primary dark:text-gray-900 dark:hover:bg-primary-light;
   }
 
   .btn-secondary {
@@ -78,13 +85,19 @@
   }
 
   .card {
-    @apply rounded-xl bg-white p-6 shadow-lg border border-border;
-    @apply dark:bg-gray-800 dark:border-darkmode-border;
+    @apply rounded-lg bg-white p-6 border border-border;
+    @apply dark:bg-[#18181b] dark:border-darkmode-border;
+    @apply transition-all duration-200;
+  }
+  
+  .card:hover {
+    @apply dark:border-darkmode-primary/30;
   }
 
   .input {
-    @apply w-full rounded-lg border border-border bg-white px-4 py-3 text-body placeholder:text-gray-400 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20;
-    @apply dark:bg-gray-800 dark:border-darkmode-border dark:text-darkmode-body dark:placeholder:text-gray-500 dark:focus:border-darkmode-primary dark:focus:ring-darkmode-primary/20;
+    @apply w-full rounded border border-border bg-white px-4 py-3 text-body placeholder:text-gray-400 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/20;
+    @apply dark:bg-[#18181b] dark:border-darkmode-border dark:text-darkmode-body dark:placeholder:text-gray-600 dark:focus:border-darkmode-primary dark:focus:ring-darkmode-primary/20;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
   }
 
   .textarea {
@@ -99,5 +112,17 @@
 @layer utilities {
   .text-gradient {
     @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+  }
+  
+  /* ASCII art style elements */
+  .ascii-border {
+    @apply border border-darkmode-border;
+    box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.1);
+  }
+  
+  /* Monospace code-like styling */
+  .code-text {
+    @apply font-mono text-xs;
+    letter-spacing: 0;
   }
 }

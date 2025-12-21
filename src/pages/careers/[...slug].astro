@@ -11,18 +11,18 @@ import { defaultLocale } from "@/config/siteSettings.json";
 export const prerender = true;
 
 export async function getStaticPaths() {
-  const careers = await getCollection("careers", ({ data }) => {
-    // filter out draft careers
-    return data.draft !== true;
-  });
+ const careers = await getCollection("careers", ({ data }) => {
+  // filter out draft careers
+  return data.draft !== true;
+ });
 
-  // get rid of pages from other languages and remove locale from slug
-  const filteredPages = filterCollectionByLanguage(careers, defaultLocale);
+ // get rid of pages from other languages and remove locale from slug
+ const filteredPages = filterCollectionByLanguage(careers, defaultLocale);
 
-  return filteredPages.map((career) => ({
-    params: { slug: career.id },
-    props: career,
-  }));
+ return filteredPages.map((career) => ({
+  params: { slug: career.id },
+  props: career,
+ }));
 }
 
 type Props = CollectionEntry<"careers">;
@@ -32,5 +32,5 @@ const { Content } = await render(career);
 ---
 
 <CareerLayout career={career}>
-  <Content />
+ <Content />
 </CareerLayout>

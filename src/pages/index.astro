@@ -3,285 +3,285 @@ import Base from "@/layouts/Base.astro";
 ---
 
 <Base title="Security, DevOps & AI Consulting">
-  <!-- Hero Section -->
-  <section class="section relative overflow-hidden">
-    <!-- Background decoration -->
-    <div class="absolute inset-0 -z-10">
-      <div class="absolute left-1/2 top-0 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/5 blur-3xl dark:bg-darkmode-primary/10"></div>
+ <!-- Hero Section -->
+ <section class="section relative overflow-hidden">
+  <!-- Background decoration -->
+  <div class="absolute inset-0 -z-10">
+   <div class="absolute left-1/2 top-0 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/5 blur-3xl dark:bg-darkmode-primary/10"></div>
+  </div>
+  
+  <div class="container">
+   <div class="mx-auto max-w-4xl text-center">
+    <h1 class="text-2xl font-extrabold leading-tight md:text-3xl lg:text-4xl">
+     Enterprise-Grade Expertise.
+     <span class="text-gradient">Small Business Pricing.</span>
+    </h1>
+    <p class="mx-auto mt-6 max-w-2xl text-sm text-body dark:text-darkmode-body md:text-base">
+     Security, DevOps, and AI consulting from senior engineers who've operated at scale — now available to growing businesses like yours.
+    </p>
+    <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+     <a href="/contact" class="btn-primary w-full sm:w-auto">
+      Let's Talk
+      <svg class="ml-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+      </svg>
+     </a>
+     <a href="/services" class="btn-outline w-full sm:w-auto">
+      View Services
+     </a>
+    </div>
+   </div>
+  </div>
+ </section>
+
+ <!-- Services Section -->
+ <section class="section bg-gray-50 dark:bg-gray-800/50">
+  <div class="container">
+   <div class="mx-auto max-w-2xl text-center">
+    <h2 class="text-xl md:text-2xl font-bold">What We Do</h2>
+    <p class="mt-4 text-body dark:text-darkmode-body">
+     Practical expertise that makes a real difference for your business
+    </p>
+   </div>
+
+   <div class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+    <!-- AI Enablement -->
+    <div class="card group">
+     <div class="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-gray-900">
+      <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+      </svg>
+     </div>
+     <h3 class="text-lg font-bold">AI Enablement</h3>
+     <p class="mt-3 text-body dark:text-darkmode-body">
+      Cut through the AI hype. We help you identify practical AI tools and workflows that actually accelerate your business — without the confusion or wasted spend.
+     </p>
+     <a href="/services#ai-enablement" class="mt-4 inline-flex items-center text-xs font-medium text-primary hover:underline dark:text-darkmode-primary">
+      Learn more
+      <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+     </a>
+    </div>
+
+    <!-- FinOps -->
+    <div class="card group">
+     <div class="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-amber-500/10 text-amber-600 transition-colors group-hover:bg-amber-500 group-hover:text-white dark:text-amber-400">
+      <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+     </div>
+     <h3 class="text-lg font-bold">FinOps & Cost Optimization</h3>
+     <p class="mt-3 text-body dark:text-darkmode-body">
+      Evaluate existing deployments for cost savings opportunities. Reduce cloud spend without sacrificing performance or reliability.
+     </p>
+     <a href="/services#finops" class="mt-4 inline-flex items-center text-xs font-medium text-primary hover:underline dark:text-darkmode-primary">
+      Learn more
+      <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+     </a>
+    </div>
+
+    <!-- DevOps & SRE -->
+    <div class="card group">
+     <div class="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white dark:text-darkmode-primary dark:group-hover:bg-darkmode-primary">
+      <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+      </svg>
+     </div>
+     <h3 class="text-lg font-bold">Virtual DevOps & SRE</h3>
+     <p class="mt-3 text-body dark:text-darkmode-body">
+      Fractional engineering leadership for CI/CD pipelines, infrastructure as code, observability, and reliability programs. Get senior expertise without a full-time hire.
+     </p>
+     <a href="/services#devops-sre" class="mt-4 inline-flex items-center text-xs font-medium text-primary hover:underline dark:text-darkmode-primary">
+      Learn more
+      <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+     </a>
+    </div>
+
+    <!-- Virtual CISO -->
+    <div class="card group">
+     <div class="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-green-500/10 text-green-600 transition-colors group-hover:bg-green-500 group-hover:text-white dark:text-green-400">
+      <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+      </svg>
+     </div>
+     <h3 class="text-lg font-bold">Virtual CISO & InfoSec</h3>
+     <p class="mt-3 text-body dark:text-darkmode-body">
+      Security leadership on your terms. Compliance programs, threat modeling, vulnerability management, and executive-ready reporting.
+     </p>
+     <a href="/services#virtual-ciso" class="mt-4 inline-flex items-center text-xs font-medium text-primary hover:underline dark:text-darkmode-primary">
+      Learn more
+      <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+     </a>
+    </div>
+   </div>
+  </div>
+ </section>
+
+ <!-- Why Section -->
+ <section class="section">
+  <div class="container">
+   <div class="grid items-center gap-12 lg:grid-cols-2">
+    <div>
+     <h2 class="text-xl md:text-2xl font-bold">
+      You Shouldn't Need Enterprise Budgets for Enterprise-Grade Guidance
+     </h2>
+     <p class="mt-6 text-body dark:text-darkmode-body">
+      Most small businesses don't need more tools or junior consultants — they need experienced guidance from people who've actually built and operated production systems at scale.
+     </p>
+     <p class="mt-4 text-body dark:text-darkmode-body">
+      Our team has led cloud migrations, built SOC2-aligned security programs, and helped organizations adopt DevOps and SRE practices that reduced outages, cut costs, and accelerated delivery.
+     </p>
+     <p class="mt-4 text-body dark:text-darkmode-body">
+      We started Secunit Mercantile to make that expertise accessible to growing businesses — on flexible retainers that make sense for your budget.
+     </p>
+     <a href="/about" class="btn-primary mt-8">
+      Meet the Team
+     </a>
     </div>
     
-    <div class="container">
-      <div class="mx-auto max-w-4xl text-center">
-        <h1 class="text-4xl font-extrabold leading-tight md:text-5xl lg:text-6xl">
-          Enterprise-Grade Expertise.
-          <span class="text-gradient">Small Business Pricing.</span>
-        </h1>
-        <p class="mx-auto mt-6 max-w-2xl text-lg text-body dark:text-darkmode-body md:text-xl">
-          Security, DevOps, and AI consulting from senior engineers who've operated at scale — now available to growing businesses like yours.
-        </p>
-        <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <a href="/contact" class="btn-primary w-full sm:w-auto">
-            Let's Talk
-            <svg class="ml-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </a>
-          <a href="/services" class="btn-outline w-full sm:w-auto">
-            View Services
-          </a>
-        </div>
-      </div>
+    <!-- Stats/Trust indicators -->
+    <div class="grid gap-6 sm:grid-cols-2">
+     <div class="card text-center">
+      <div class="text-lg font-bold text-primary dark:text-darkmode-primary">20+</div>
+      <div class="mt-2 text-sm text-body dark:text-darkmode-body">Years of Experience</div>
+     </div>
+     <div class="card text-center">
+      <div class="text-xs font-bold text-primary dark:text-darkmode-primary">CISSP</div>
+      <div class="mt-2 text-sm text-body dark:text-darkmode-body">Certified Since 2017</div>
+     </div>
+     <div class="card text-center">
+      <div class="text-xs font-bold text-primary dark:text-darkmode-primary">280+</div>
+      <div class="mt-2 text-sm text-body dark:text-darkmode-body">Services Migrated to K8s</div>
+     </div>
+     <div class="card text-center">
+      <div class="text-xs font-bold text-primary dark:text-darkmode-primary">99.99%</div>
+      <div class="mt-2 text-sm text-body dark:text-darkmode-body">Reliability Achieved</div>
+     </div>
     </div>
-  </section>
+   </div>
+  </div>
+ </section>
 
-  <!-- Services Section -->
-  <section class="section bg-gray-50 dark:bg-gray-800/50">
-    <div class="container">
-      <div class="mx-auto max-w-2xl text-center">
-        <h2 class="text-3xl font-bold md:text-4xl">What We Do</h2>
-        <p class="mt-4 text-body dark:text-darkmode-body">
-          Practical expertise that makes a real difference for your business
-        </p>
-      </div>
-
-      <div class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-        <!-- AI Enablement -->
-        <div class="card group">
-          <div class="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-gray-900">
-            <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-            </svg>
-          </div>
-          <h3 class="text-xl font-bold">AI Enablement</h3>
-          <p class="mt-3 text-body dark:text-darkmode-body">
-            Cut through the AI hype. We help you identify practical AI tools and workflows that actually accelerate your business — without the confusion or wasted spend.
-          </p>
-          <a href="/services#ai-enablement" class="mt-4 inline-flex items-center text-sm font-medium text-primary hover:underline dark:text-darkmode-primary">
-            Learn more
-            <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
-        </div>
-
-        <!-- FinOps -->
-        <div class="card group">
-          <div class="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-amber-500/10 text-amber-600 transition-colors group-hover:bg-amber-500 group-hover:text-white dark:text-amber-400">
-            <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </div>
-          <h3 class="text-xl font-bold">FinOps & Cost Optimization</h3>
-          <p class="mt-3 text-body dark:text-darkmode-body">
-            Evaluate existing deployments for cost savings opportunities. Reduce cloud spend without sacrificing performance or reliability.
-          </p>
-          <a href="/services#finops" class="mt-4 inline-flex items-center text-sm font-medium text-primary hover:underline dark:text-darkmode-primary">
-            Learn more
-            <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
-        </div>
-
-        <!-- DevOps & SRE -->
-        <div class="card group">
-          <div class="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white dark:text-darkmode-primary dark:group-hover:bg-darkmode-primary">
-            <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-            </svg>
-          </div>
-          <h3 class="text-xl font-bold">Virtual DevOps & SRE</h3>
-          <p class="mt-3 text-body dark:text-darkmode-body">
-            Fractional engineering leadership for CI/CD pipelines, infrastructure as code, observability, and reliability programs. Get senior expertise without a full-time hire.
-          </p>
-          <a href="/services#devops-sre" class="mt-4 inline-flex items-center text-sm font-medium text-primary hover:underline dark:text-darkmode-primary">
-            Learn more
-            <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
-        </div>
-
-        <!-- Virtual CISO -->
-        <div class="card group">
-          <div class="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-green-500/10 text-green-600 transition-colors group-hover:bg-green-500 group-hover:text-white dark:text-green-400">
-            <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-            </svg>
-          </div>
-          <h3 class="text-xl font-bold">Virtual CISO & InfoSec</h3>
-          <p class="mt-3 text-body dark:text-darkmode-body">
-            Security leadership on your terms. Compliance programs, threat modeling, vulnerability management, and executive-ready reporting.
-          </p>
-          <a href="/services#virtual-ciso" class="mt-4 inline-flex items-center text-sm font-medium text-primary hover:underline dark:text-darkmode-primary">
-            Learn more
-            <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
-        </div>
-      </div>
+ <!-- Trust Logos -->
+ <section class="section-sm border-y border-border bg-gray-50 dark:border-darkmode-border dark:bg-gray-800/50 overflow-hidden">
+  <div class="container">
+   <p class="mb-8 text-center text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">
+    Our Team Has Worked With
+   </p>
+   <div class="logo-ticker">
+    <div class="logo-track">
+     <div class="logo-item">
+      <img src="/logos/hartford.svg" alt="The Hartford" class="h-12 max-w-[160px] object-contain" />
+     </div>
+     <div class="logo-item">
+      <img src="/logos/ibm.svg" alt="IBM" class="h-12 max-w-[160px] object-contain" />
+     </div>
+     <div class="logo-item">
+      <img src="/logos/wellsfargo.svg" alt="Wells Fargo" class="h-12 max-w-[160px] object-contain" />
+     </div>
+     <div class="logo-item">
+      <img src="/logos/hondajet.svg" alt="Honda Aircraft" class="h-12 max-w-[160px] object-contain" />
+     </div>
+     <div class="logo-item">
+      <img src="/logos/aig.svg" alt="AIG" class="h-12 max-w-[160px] object-contain" />
+     </div>
+     <div class="logo-item">
+      <img src="/logos/cyware.svg" alt="Cyware" class="h-12 max-w-[160px] object-contain" />
+     </div>
+     <div class="logo-item">
+      <img src="/logos/alphatheory.svg" alt="AlphaTheory" class="h-12 max-w-[160px] object-contain" />
+     </div>
+     <!-- Duplicate for seamless loop -->
+     <div class="logo-item">
+      <img src="/logos/hartford.svg" alt="The Hartford" class="h-12 max-w-[160px] object-contain" />
+     </div>
+     <div class="logo-item">
+      <img src="/logos/ibm.svg" alt="IBM" class="h-12 max-w-[160px] object-contain" />
+     </div>
+     <div class="logo-item">
+      <img src="/logos/wellsfargo.svg" alt="Wells Fargo" class="h-12 max-w-[160px] object-contain" />
+     </div>
+     <div class="logo-item">
+      <img src="/logos/hondajet.svg" alt="Honda Aircraft" class="h-12 max-w-[160px] object-contain" />
+     </div>
+     <div class="logo-item">
+      <img src="/logos/aig.svg" alt="AIG" class="h-12 max-w-[160px] object-contain" />
+     </div>
+     <div class="logo-item">
+      <img src="/logos/cyware.svg" alt="Cyware" class="h-12 max-w-[160px] object-contain" />
+     </div>
+     <div class="logo-item">
+      <img src="/logos/alphatheory.svg" alt="AlphaTheory" class="h-12 max-w-[160px] object-contain" />
+     </div>
     </div>
-  </section>
+   </div>
+  </div>
+ </section>
 
-  <!-- Why Section -->
-  <section class="section">
-    <div class="container">
-      <div class="grid items-center gap-12 lg:grid-cols-2">
-        <div>
-          <h2 class="text-3xl font-bold md:text-4xl">
-            You Shouldn't Need Enterprise Budgets for Enterprise-Grade Guidance
-          </h2>
-          <p class="mt-6 text-body dark:text-darkmode-body">
-            Most small businesses don't need more tools or junior consultants — they need experienced guidance from people who've actually built and operated production systems at scale.
-          </p>
-          <p class="mt-4 text-body dark:text-darkmode-body">
-            Our team has led cloud migrations, built SOC2-aligned security programs, and helped organizations adopt DevOps and SRE practices that reduced outages, cut costs, and accelerated delivery.
-          </p>
-          <p class="mt-4 text-body dark:text-darkmode-body">
-            We started Secunit Mercantile to make that expertise accessible to growing businesses — on flexible retainers that make sense for your budget.
-          </p>
-          <a href="/about" class="btn-primary mt-8">
-            Meet the Team
-          </a>
-        </div>
-        
-        <!-- Stats/Trust indicators -->
-        <div class="grid gap-6 sm:grid-cols-2">
-          <div class="card text-center">
-            <div class="text-4xl font-bold text-primary dark:text-darkmode-primary">20+</div>
-            <div class="mt-2 text-sm text-body dark:text-darkmode-body">Years of Experience</div>
-          </div>
-          <div class="card text-center">
-            <div class="text-4xl font-bold text-primary dark:text-darkmode-primary">CISSP</div>
-            <div class="mt-2 text-sm text-body dark:text-darkmode-body">Certified Since 2017</div>
-          </div>
-          <div class="card text-center">
-            <div class="text-4xl font-bold text-primary dark:text-darkmode-primary">280+</div>
-            <div class="mt-2 text-sm text-body dark:text-darkmode-body">Services Migrated to K8s</div>
-          </div>
-          <div class="card text-center">
-            <div class="text-4xl font-bold text-primary dark:text-darkmode-primary">99.99%</div>
-            <div class="mt-2 text-sm text-body dark:text-darkmode-body">Reliability Achieved</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+ <style>
+  .logo-ticker {
+   position: relative;
+   width: 100%;
+  }
+  
+  .logo-track {
+   display: flex;
+   gap: 3rem;
+   animation: scroll 30s linear infinite;
+  }
+  
+  .logo-item {
+   flex: 0 0 auto;
+   display: flex;
+   align-items: center;
+   opacity: 0.6;
+   filter: grayscale(100%);
+   transition: all 0.3s ease;
+  }
+  
+  .logo-item:hover {
+   opacity: 1;
+   filter: grayscale(0%);
+  }
+  
+  @keyframes scroll {
+   0% {
+    transform: translateX(0);
+   }
+   100% {
+    transform: translateX(-50%);
+   }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+   .logo-track {
+    animation: none;
+   }
+  }
+ </style>
 
-  <!-- Trust Logos -->
-  <section class="section-sm border-y border-border bg-gray-50 dark:border-darkmode-border dark:bg-gray-800/50 overflow-hidden">
-    <div class="container">
-      <p class="mb-8 text-center text-sm font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">
-        Our Team Has Worked With
-      </p>
-      <div class="logo-ticker">
-        <div class="logo-track">
-          <div class="logo-item">
-            <img src="/logos/hartford.svg" alt="The Hartford" class="h-12 max-w-[160px] object-contain" />
-          </div>
-          <div class="logo-item">
-            <img src="/logos/ibm.svg" alt="IBM" class="h-12 max-w-[160px] object-contain" />
-          </div>
-          <div class="logo-item">
-            <img src="/logos/wellsfargo.svg" alt="Wells Fargo" class="h-12 max-w-[160px] object-contain" />
-          </div>
-          <div class="logo-item">
-            <img src="/logos/hondajet.svg" alt="Honda Aircraft" class="h-12 max-w-[160px] object-contain" />
-          </div>
-          <div class="logo-item">
-            <img src="/logos/aig.svg" alt="AIG" class="h-12 max-w-[160px] object-contain" />
-          </div>
-          <div class="logo-item">
-            <img src="/logos/cyware.svg" alt="Cyware" class="h-12 max-w-[160px] object-contain" />
-          </div>
-          <div class="logo-item">
-            <img src="/logos/alphatheory.svg" alt="AlphaTheory" class="h-12 max-w-[160px] object-contain" />
-          </div>
-          <!-- Duplicate for seamless loop -->
-          <div class="logo-item">
-            <img src="/logos/hartford.svg" alt="The Hartford" class="h-12 max-w-[160px] object-contain" />
-          </div>
-          <div class="logo-item">
-            <img src="/logos/ibm.svg" alt="IBM" class="h-12 max-w-[160px] object-contain" />
-          </div>
-          <div class="logo-item">
-            <img src="/logos/wellsfargo.svg" alt="Wells Fargo" class="h-12 max-w-[160px] object-contain" />
-          </div>
-          <div class="logo-item">
-            <img src="/logos/hondajet.svg" alt="Honda Aircraft" class="h-12 max-w-[160px] object-contain" />
-          </div>
-          <div class="logo-item">
-            <img src="/logos/aig.svg" alt="AIG" class="h-12 max-w-[160px] object-contain" />
-          </div>
-          <div class="logo-item">
-            <img src="/logos/cyware.svg" alt="Cyware" class="h-12 max-w-[160px] object-contain" />
-          </div>
-          <div class="logo-item">
-            <img src="/logos/alphatheory.svg" alt="AlphaTheory" class="h-12 max-w-[160px] object-contain" />
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <style>
-    .logo-ticker {
-      position: relative;
-      width: 100%;
-    }
-    
-    .logo-track {
-      display: flex;
-      gap: 3rem;
-      animation: scroll 30s linear infinite;
-    }
-    
-    .logo-item {
-      flex: 0 0 auto;
-      display: flex;
-      align-items: center;
-      opacity: 0.6;
-      filter: grayscale(100%);
-      transition: all 0.3s ease;
-    }
-    
-    .logo-item:hover {
-      opacity: 1;
-      filter: grayscale(0%);
-    }
-    
-    @keyframes scroll {
-      0% {
-        transform: translateX(0);
-      }
-      100% {
-        transform: translateX(-50%);
-      }
-    }
-    
-    @media (prefers-reduced-motion: reduce) {
-      .logo-track {
-        animation: none;
-      }
-    }
-  </style>
-
-  <!-- CTA Section -->
-  <section class="section">
-    <div class="container">
-      <div class="mx-auto max-w-3xl rounded-2xl bg-secondary p-8 text-center text-white md:p-12 dark:bg-gray-800">
-        <h2 class="text-3xl font-bold md:text-4xl">Ready to Get Started?</h2>
-        <p class="mx-auto mt-4 max-w-xl text-lg opacity-90">
-          Tell us about your challenges. We'll show you how senior-level expertise can help — without the enterprise price tag.
-        </p>
-        <a href="/contact" class="btn mt-8 bg-primary text-gray-900 font-bold hover:bg-primary-light shadow-none">
-          Let's Talk
-          <svg class="ml-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-          </svg>
-        </a>
-      </div>
-    </div>
-  </section>
+ <!-- CTA Section -->
+ <section class="section">
+  <div class="container">
+   <div class="mx-auto max-w-3xl rounded-2xl bg-secondary p-8 text-center text-white md:p-12 dark:bg-gray-800">
+    <h2 class="text-xl md:text-2xl font-bold">Ready to Get Started?</h2>
+    <p class="mx-auto mt-4 max-w-xl text-sm opacity-90">
+     Tell us about your challenges. We'll show you how senior-level expertise can help — without the enterprise price tag.
+    </p>
+    <a href="/contact" class="btn mt-8 bg-primary text-gray-900 font-bold hover:bg-primary-light dark:bg-darkmode-primary dark:text-gray-900 dark:hover:bg-primary-light shadow-none">
+      Let's Talk
+      <svg class="ml-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+      </svg>
+    </a>
+   </div>
+  </div>
+ </section>
 </Base>
