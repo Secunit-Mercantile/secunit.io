@@ -1,49 +1,46 @@
 /**
- * * Tailwind theme settings
- * 
+ * Tailwind theme settings - GoWipeMe Refined Theme
+ *
  * These are in a separate file so it can be imported into <style> tags in .astro components
  */
 @theme {
-  /* cosmic themes theme config */
-  /* primary colors. Can generate with https://uicolors.app/create, then convert to oklch with https://oklch.com/ */
-  --color-primary-50: oklch(99.14% 0.0352 110.48);
-  --color-primary-100: oklch(98.12% 0.0758 112.52);
-  --color-primary-200: oklch(96.63% 0.1362 114.89);
-  --color-primary-300: oklch(94.86% 0.1941 118.46);
-  --color-primary-400: oklch(93.07% 0.228585 123.0902);
-  --color-primary-500: oklch(85.71% 0.214 124.48);
-  --color-primary-600: oklch(72.27% 0.18295 130);
-  --color-primary-700: oklch(58.84% 0.148573 134);
-  --color-primary-800: oklch(49.52% 0.1216 136);
-  --color-primary-900: oklch(44.02% 0.1051 138);
-  --color-primary-950: oklch(34% 0.05 140);
+  /* GoWipeMe Refined Theme - Teal accent on dark */
 
-  /* base colors */
-  --color-base-50: oklch(97.31% 0 0);
-  --color-base-100: oklch(92.8% 0 0);
-  --color-base-200: oklch(86.07% 0 0);
-  --color-base-300: oklch(75.72% 0 0);
-  --color-base-400: oklch(62.68% 0 0);
-  --color-base-500: oklch(53.48% 0 0);
-  --color-base-600: oklch(47.84% 0 0);
-  --color-base-700: oklch(39.65% 0 0);
-  --color-base-800: oklch(33.04% 0 0);
-  --color-base-900: oklch(28% 0 0);
-  --color-base-950: oklch(20% 0 0);
+  /* Primary accent colors - Teal/Mint */
+  --color-primary-50: oklch(97% 0.08 175);
+  --color-primary-100: oklch(94% 0.12 175);
+  --color-primary-200: oklch(88% 0.16 175);
+  --color-primary-300: oklch(82% 0.18 175);
+  --color-primary-400: oklch(76% 0.19 172);
+  --color-primary-500: oklch(70% 0.17 170);   /* #20E3B2 equivalent */
+  --color-primary-600: oklch(62% 0.15 170);   /* #14b89f equivalent */
+  --color-primary-700: oklch(52% 0.13 170);
+  --color-primary-800: oklch(42% 0.10 170);
+  --color-primary-900: oklch(35% 0.08 170);
+  --color-primary-950: oklch(25% 0.05 170);
 
-  --color-blueGray-50: oklch(97.19% 0.0025 228.78);
-  --color-blueGray-100: oklch(92.62% 0.0042 236.5);
-  --color-blueGray-200: oklch(85.75% 0.0096 242.86);
-  --color-blueGray-300: oklch(75.29% 0.0164 248.05);
-  --color-blueGray-400: oklch(61.84% 0.0254 252.29);
-  --color-blueGray-500: oklch(52.62% 0.0265 252.34);
-  --color-blueGray-600: oklch(46.86% 0.0219 258.37);
-  --color-blueGray-700: oklch(38% 0.0175 254.72);
-  --color-blueGray-800: oklch(30% 0.0146 264.39);
-  --color-blueGray-900: oklch(24% 0.0102 253.97);
-  --color-blueGray-950: oklch(17% 0.0102 253.97);
+  /* Dark base colors for backgrounds */
+  --color-base-50: oklch(97% 0 0);
+  --color-base-100: oklch(92% 0 0);
+  --color-base-200: oklch(86% 0 0);
+  --color-base-300: oklch(75% 0 0);
+  --color-base-400: oklch(62% 0 0);
+  --color-base-500: oklch(53% 0 0);
+  --color-base-600: oklch(47% 0 0);
+  --color-base-700: oklch(39% 0 0);
+  --color-base-800: oklch(25% 0 0);   /* #1e1e1e elevated */
+  --color-base-850: oklch(20% 0 0);   /* #1a1a1a tertiary */
+  --color-base-900: oklch(15% 0 0);   /* #121212 secondary */
+  --color-base-950: oklch(10% 0 0);   /* #0a0a0a primary */
 
-  /* other theme tailwind utilities */
+  /* Semantic colors */
+  --color-danger-500: oklch(65% 0.2 25);      /* #FF6B6B */
+  --color-warning-500: oklch(75% 0.18 70);    /* #FFB020 */
+  --color-success-500: oklch(70% 0.17 170);   /* #20E3B2 */
+
+  /* Letter spacing */
+  --tracking-tight: -0.01em;
+  --tracking-tighter: -0.02em;
   --tracking-2xl: -0.48px;
   --tracking-3xl: -0.64px;
   --tracking-4xl: -2px;
@@ -52,23 +49,33 @@
   --tracking-7xl: -1.86px;
   --tracking-8xl: -3.6px;
 
-  --radius-5xl: calc(var(--radius) + 1.275rem);
+  /* Border radius - GoWipeMe uses larger radii */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-3xl: 24px;
+  --radius-4xl: 28px;
+  --radius-5xl: 32px;
 
-  /* font families */
+  /* Font families */
   --font-fallback:
-    "ui-sans-serif", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica",
+    "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica",
     "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  --font-heading: "Clash Grotesk", var(--font-fallback);
-  --font-sans: "Clash Grotesk", var(--font-fallback);
+  --font-sans: "Inter", var(--font-fallback);
+  --font-heading: "Inter", var(--font-fallback);
   --font-mono:
-    "ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono",
+    "JetBrains Mono", "ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono",
     "Courier New", "monospace";
 
-  /* starwind and cosmic themes animations */
+  /* Animations */
   --animate-accordion-down: accordion-down 0.3s ease-out;
   --animate-accordion-up: accordion-up 0.3s ease-out;
   --animate-marquee: marquee 70s linear infinite;
-  --animate-float: float 6s ease-in-out infinite;
+  --animate-float: float 3s ease-in-out infinite;
+  --animate-glow-pulse: glow-pulse 2s ease-in-out infinite;
+  --animate-gradient-shift: gradient-shift 3s ease-in-out infinite;
 
   @keyframes accordion-down {
     from {
@@ -106,11 +113,35 @@
       transform: translateY(-10px);
     }
   }
+
+  @keyframes glow-pulse {
+    0%,
+    100% {
+      opacity: 0.5;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+  }
+
+  @keyframes gradient-shift {
+    0% {
+      background-position: 0% center;
+    }
+    50% {
+      background-position: 100% center;
+    }
+    100% {
+      background-position: 0% center;
+    }
+  }
 }
 
 /* "inline" option is necessary here https://github.com/tailwindlabs/tailwindcss/discussions/15122#discussioncomment-11356322 */
 @theme inline {
-  /* starwind utilities setup */
+  /* GoWipeMe Refined Theme starwind utilities setup */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
