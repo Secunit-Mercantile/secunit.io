@@ -1,6 +1,6 @@
 # CONTEXT.md - Secunit Mercantile Website
 
-**Last Updated:** December 20, 2025  
+**Last Updated:** December 20, 2025 (End of Dev Session)  
 **Live Site:** https://secunit.io  
 **Purpose:** Enterprise-grade security, DevOps, SRE, and AI consulting for small and mid-sized businesses
 
@@ -15,12 +15,13 @@
 5. [Content Management](#content-management)
 6. [Styling System](#styling-system)
 7. [Contact Form](#contact-form)
-8. [Deployment](#deployment)
-9. [Development Workflow](#development-workflow)
-10. [Key Features](#key-features)
-11. [Internationalization](#internationalization)
-12. [Known Issues & TODOs](#known-issues--todos)
-13. [Component Inventory](#component-inventory)
+8. [API Routes](#api-routes)
+9. [Deployment](#deployment)
+10. [Development Workflow](#development-workflow)
+11. [Key Features](#key-features)
+12. [Internationalization](#internationalization)
+13. [Known Issues & TODOs](#known-issues--todos)
+14. [Component Inventory](#component-inventory)
 
 ---
 
@@ -33,13 +34,14 @@ Secunit Mercantile is a consulting website offering:
 - **Virtual CISO & InfoSec** - Security leadership services
 
 The site features:
-- Static site generation with Astro v5
+- SSR with Astro v5 (hybrid rendering - static pages prerendered)
 - Blog with MDX support
 - Contact form with Cloudflare D1 storage
 - Email notifications via Resend
-- Dark mode support
+- Dark mode support (PlanetScale-inspired monospace design)
 - Mobile-responsive design
 - SEO optimized
+- Healthcheck endpoints for monitoring
 
 ---
 
@@ -184,8 +186,14 @@ secunit-website/
 ├── tsconfig.json                # TypeScript configuration
 ├── fly.toml                     # Fly.io configuration
 ├── Dockerfile                   # Docker build configuration
+├── fly.toml                     # Fly.io production configuration
+├── fly.dev.toml                 # Fly.io dev environment configuration
+├── Dockerfile                   # Docker build configuration (Bun + distroless)
 ├── wrangler.toml                # Cloudflare D1 CLI config (for database management)
 ├── netlify.toml                 # Legacy Netlify config (not used)
+├── .github/workflows/           # GitHub Actions workflows
+│   ├── deploy-prod.yml          # Auto-deploy main branch to production
+│   └── deploy-dev.yml           # Auto-deploy dev branch to dev.secunit.io
 ├── keystatic.config.tsx         # Keystatic CMS config
 └── starwind.config.json         # Starwind component registry
 ```
@@ -329,6 +337,21 @@ Content goes here...
 6. Send email via Resend API
 7. Return JSON response with contact_id
 
+### Healthcheck Endpoints
+
+**`/api/live`** - Simple liveness check
+- Always returns HTTP 200 if app is running
+- Used by Fly.io for health checks
+- No external dependencies
+- Fast response time
+
+**`/api/health`** - Comprehensive health check
+- Checks app status
+- Performs full CRUD operations on D1 database
+- Returns detailed JSON with status of each check
+- Always returns HTTP 200 (uses JSON status field for health state)
+- Safe to run repeatedly (cleans up test records)
+
 ### Database Schema
 
 ```sql
@@ -376,6 +399,54 @@ wrangler d1 execute secunit-contacts --command="SELECT * FROM contacts" --json >
 
 ---
 
+## 🔌 API Routes
+
+### Contact Form (`/api/contact`)
+
+**Endpoint:** `POST /api/contact`
+
+**Purpose:** Handle contact form submissions
+
+**Request Body:**
+```json
+{
+  "name": "string (required)",
+  "email": "string (required)",
+  "company": "string (optional)",
+  "phone": "string (optional)",
+  "inquiry_type": "string (required)",
+  "message": "string (required)",
+  "referral_source": "string (optional)",
+  "website": "string (optional - honeypot)"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "contact_id": 123,
+  "json_blob": { ... }
+}
+```
+
+### Healthcheck Endpoints
+
+**`GET /api/live`** - Simple liveness check
+- Returns: `{ "status": "ok", "timestamp": "ISO string" }`
+- HTTP Status: Always 200 if app is running
+- Used by: Fly.io health checks
+- Performance: Fast, no external calls
+
+**`GET /api/health`** - Comprehensive health check
+- Returns: Detailed JSON with app and D1 database status
+- Checks: App status, D1 CRUD operations (CREATE, READ, UPDATE, DELETE)
+- HTTP Status: 200 (uses JSON status field: "healthy", "degraded", "unhealthy")
+- Used by: Monitoring, debugging
+- Performance: Slower (performs database operations)
+
+---
+
 ## 🚀 Deployment
 
 ### Fly.io
@@ -383,8 +454,8 @@ wrangler d1 execute secunit-contacts --command="SELECT * FROM contacts" --json >
 **Configuration (`fly.toml`):**
 - App name: `secunit-io`
 - Primary region: `iad` (Ashburn, Virginia)
-- VM: 512MB RAM, shared CPU
-- Auto-scaling: Scales to zero when idle
+- VM: 256MB RAM, shared CPU
+- Auto-scaling: Scales to zero when idle (min_machines_running = 1 for production)
 
 **Custom Domain:**
 - Primary: `secunit.io`
@@ -444,7 +515,7 @@ bun run dev
 
 The `Dockerfile` uses a multi-stage build:
 1. **Builder stage:** Uses `oven/bun:1-alpine` to install dependencies and build Astro
-2. **Runner stage:** Minimal Node.js image with only production files
+2. **Runner stage:** Uses `gcr.io/distroless/nodejs22-debian12:nonroot` - minimal, secure image with no shell or unnecessary tools
 
 ```bash
 # Build Docker image locally
@@ -458,17 +529,46 @@ docker run -p 4321:4321 secunit-website
 
 ## 💻 Development Workflow
 
+### Branch Strategy
+
+- **`main`** - Production branch (deploys to `secunit.io`)
+- **`dev`** - Development branch (deploys to `dev.secunit.io`)
+
+**Workflow:**
+1. Work on `dev` branch
+2. Push changes → Auto-deploys to `dev.secunit.io`
+3. Test on dev environment
+4. Merge `dev` → `main` → Auto-deploys to production
+
+**Syncing from Production:**
+```bash
+git checkout dev
+git merge main
+git push origin dev
+```
+
+### Dev Environment
+
+**Configuration (`fly.dev.toml`):**
+- App name: `secunit-io-dev`
+- Environment: `development`
+- Can scale to zero (cost savings)
+- Site URL: `https://dev.secunit.io`
+
+**Setup:**
+See `DEV_SETUP.md` for complete dev environment setup instructions.
+
 ### Local Development
 
 ```bash
 # Start dev server (http://localhost:4321)
-yarn dev
+bun run dev
 
 # Format code
-yarn format
+bun run format
 
 # Lint code
-yarn lint
+bun run lint
 ```
 
 ### Adding a New Page
@@ -531,9 +631,10 @@ wrangler d1 execute secunit-contacts --command="SELECT * FROM contacts" --json >
 - Auto-scaling to zero when idle (cost efficient)
 - Minimal client-side JavaScript
 - Optimized images (manual optimization)
-- Preconnect to external resources (Google Fonts)
+- Preconnect to external resources (Google Fonts - JetBrains Mono)
 - Dark mode without flash (inline script)
 - Edge deployment available via Fly.io regions
+- Healthcheck endpoints for monitoring (`/api/live`, `/api/health`)
 
 ### Accessibility
 
@@ -695,12 +796,23 @@ wrangler d1 execute secunit-contacts --command="SELECT * FROM contacts" --json >
 - App name: `secunit-io`
 - Primary region: `iad`
 - Internal port: 4321
+- Memory: 256MB
 - Auto-scaling enabled
+- Health check: `/api/live`
+
+### `fly.dev.toml`
+- App name: `secunit-io-dev`
+- Primary region: `iad`
+- Internal port: 4321
+- Memory: 1GB (configurable)
+- Can scale to zero
+- Environment: `development`
 
 ### `tailwind.config.mjs`
 - Content: All source files in `src/`
 - Dark mode: `class` strategy
-- Custom colors: primary, secondary, darkmode variants
+- Font family: JetBrains Mono (monospace) with fallbacks
+- Custom colors: primary (green), secondary (blue), darkmode variants
 - Plugins: typography, forms
 
 ### `tsconfig.json`
@@ -724,29 +836,44 @@ wrangler d1 execute secunit-contacts --command="SELECT * FROM contacts" --json >
 ### Typography
 
 **Font Family:**
-- Inter (Google Fonts)
+- **JetBrains Mono** (Google Fonts) - Monospace font for PlanetScale-inspired aesthetic
 - Weights: 400, 500, 600, 700, 800
 - Used for both body and headings
+- Fallback: `ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace`
+- Letter spacing: -0.01em (body), -0.02em (headings)
 
 **Scale:**
-- Base: 16px
-- Headings: `font-heading font-bold`
-- Body: `text-body` (light) / `text-darkmode-body` (dark)
+- Base: `text-sm` (14px) - Reduced by 2 sizes from original
+- Headings: 
+  - h1: `text-2xl md:text-3xl lg:text-4xl`
+  - h2: `text-xl md:text-2xl`
+  - h3: `text-lg`
+- Body: `text-sm` (light) / `text-darkmode-body` (dark)
 
 ### Colors
 
-**Primary (Blue):**
-- Light: `#1160e8`
-- Dark: `#388bff`
+**Primary (Green - PlanetScale-inspired):**
+- Light: `#22c55e` (rgb(34, 197, 94))
+- Light hover: `#4ade80` (rgb(74, 222, 128))
+- Dark: `#22c55e` (same green for dark mode)
 - Usage: CTA buttons, links, primary accents
 
-**Secondary (Orange):**
-- Color: `#f7931e`
-- Usage: AI Enablement service, secondary accents
+**Secondary (Blue):**
+- Color: `#3b82f6` (rgb(59, 130, 246))
+- Usage: Secondary accents, links
+
+**Background Colors:**
+- Light mode: White (`#ffffff`)
+- Dark mode: Very dark (`#09090b`) - PlanetScale aesthetic
+- Card background (dark): `#18181b`
+
+**Text Colors:**
+- Light mode: `#6b7280` (gray)
+- Dark mode: `#d1d5db` (light gray)
 
 **Service Colors:**
-- AI Enablement: Secondary (orange)
-- DevOps/SRE: Primary (blue)
+- AI Enablement: Secondary (orange) - legacy
+- DevOps/SRE: Primary (green)
 - FinOps: Amber
 - Virtual CISO: Green
 
@@ -776,10 +903,22 @@ wrangler d1 execute secunit-contacts --command="SELECT * FROM contacts" --json >
 
 ## 📝 Notes for Future Development
 
+### Recent Changes (December 20, 2025)
+
+1. **Migrated to Fly.io** - Moved from Cloudflare Pages to Fly.io for SSR hosting
+2. **Design Update** - Changed to PlanetScale-inspired monospace aesthetic
+   - JetBrains Mono font throughout
+   - Dark theme with green accents
+   - Reduced font sizes by 2 sizes
+3. **Hybrid Rendering** - Added prerendering to static pages (blog, careers, categories)
+4. **Dev Environment** - Set up `dev` branch with separate Fly.io app (`dev.secunit.io`)
+5. **Healthcheck Endpoints** - Added `/api/live` and `/api/health` for monitoring
+6. **Docker Optimization** - Switched to distroless image for production
+
 ### Performance Considerations
 
 1. **Image Optimization** - Consider adding Astro's image optimization integration
-2. **Font Loading** - Currently using Google Fonts; consider self-hosting for better performance
+2. **Font Loading** - Currently using Google Fonts (JetBrains Mono); consider self-hosting for better performance
 3. **Component Tree Shaking** - Remove unused Starwind components
 
 ### Security Considerations

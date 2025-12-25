@@ -7,15 +7,46 @@ import Base from "@/layouts/Base.astro";
  description="Meet the team behind Secunit Mercantile. Senior engineers with 20+ years of experience in cloud, security, and reliability."
 >
  <!-- Page Header -->
- <section class="section bg-gray-50 dark:bg-gray-800/50">
+ <section class="section relative overflow-hidden" style="background-color: rgb(var(--color-bg-secondary));">
+  <!-- Background glow effects -->
+  <div class="absolute inset-0 -z-10">
+   <div class="absolute left-1/4 top-0 h-[400px] w-[400px] -translate-y-1/2 rounded-full bg-[#20E3B2]/10 blur-[100px]"></div>
+   <div class="absolute right-1/4 bottom-0 h-[300px] w-[300px] translate-y-1/2 rounded-full bg-[#20E3B2]/5 blur-[80px]"></div>
+  </div>
+
   <div class="container">
    <div class="mx-auto max-w-3xl text-center">
-    <h1 class="text-2xl font-extrabold md:text-3xl lg:text-4xl">
-     Built by Engineers Who've Been There
+    <!-- Badge -->
+    <div class="mb-6 inline-flex items-center gap-2 badge">
+     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+     </svg>
+     Meet the Team
+    </div>
+
+    <h1 class="text-3xl font-extrabold md:text-4xl lg:text-5xl text-white leading-tight">
+     Built by Engineers
+     <span class="text-gradient-animated block mt-2">Who've Been There</span>
     </h1>
-    <p class="mt-6 text-sm text-body dark:text-darkmode-body">
+    <p class="mx-auto mt-8 max-w-xl text-base leading-relaxed" style="color: rgb(var(--color-text-secondary))">
      We started Secunit Mercantile because small businesses deserve access to the same caliber of expertise that enterprises take for granted.
     </p>
+
+    <!-- Quick stats -->
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-8">
+     <div class="flex items-center gap-2">
+      <div class="h-2 w-2 rounded-full bg-[#20E3B2] animate-pulse"></div>
+      <span class="text-sm font-medium text-white">40+ Combined Years</span>
+     </div>
+     <div class="flex items-center gap-2">
+      <div class="h-2 w-2 rounded-full bg-[#20E3B2]"></div>
+      <span class="text-sm font-medium text-white">CISSP Certified</span>
+     </div>
+     <div class="flex items-center gap-2">
+      <div class="h-2 w-2 rounded-full bg-[#20E3B2]"></div>
+      <span class="text-sm font-medium text-white">Enterprise Background</span>
+     </div>
+    </div>
    </div>
   </div>
  </section>
@@ -167,7 +198,7 @@ import Base from "@/layouts/Base.astro";
      
      <div class="mt-6 space-y-4 text-body dark:text-darkmode-body">
       <p>
-       Jason brings extensive experience in cloud infrastructure, DevOps practices, and systems engineering to Secunit Mercantile. With a strong focus on automation and reliability, he helps businesses build scalable, maintainable infrastructure that supports growth.
+       With over 20 years of experience, Jason brings deep expertise in cloud infrastructure, DevOps practices, and systems engineering to Secunit Mercantile. With a strong focus on automation and reliability, he helps businesses build scalable, maintainable infrastructure that supports growth.
       </p>
       <p>
        His expertise spans container orchestration, infrastructure as code, and modern deployment pipelines. Jason's practical approach to solving complex technical challenges makes him an invaluable partner for organizations looking to modernize their operations.
@@ -176,6 +207,9 @@ import Base from "@/layouts/Base.astro";
 
      <!-- Skills/Credentials -->
      <div class="mt-8 flex flex-wrap gap-3">
+      <span class="rounded-full bg-gray-100 px-4 py-2 text-xs font-medium text-body dark:bg-gray-700 dark:text-darkmode-body">
+       20+ years experience
+      </span>
       <span class="rounded-full bg-gray-100 px-4 py-2 text-xs font-medium text-body dark:bg-gray-700 dark:text-darkmode-body">
        Cloud Infrastructure
       </span>
@@ -251,13 +285,16 @@ import Base from "@/layouts/Base.astro";
  <!-- CTA -->
  <section class="section">
   <div class="container">
-   <div class="mx-auto max-w-3xl rounded-2xl bg-primary p-8 text-center text-white md:p-12 dark:bg-darkmode-primary">
-    <h2 class="text-xl font-bold md:text-2xl">Let's Work Together</h2>
-    <p class="mx-auto mt-4 max-w-xl text-sm opacity-90">
+   <div class="mx-auto max-w-3xl p-8 text-center md:p-12 card-glow">
+    <h2 class="text-xl font-bold md:text-2xl text-white">Let's Work Together</h2>
+    <p class="mx-auto mt-4 max-w-xl text-sm" style="color: rgb(var(--color-text-secondary))">
      Ready to bring senior-level expertise to your team?
     </p>
-    <a href="/contact" class="btn mt-8 bg-white text-primary hover:bg-gray-100 dark:text-gray-900">
+    <a href="/contact" class="btn-primary mt-8">
      Get in Touch
+     <svg class="ml-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+     </svg>
     </a>
    </div>
   </div>

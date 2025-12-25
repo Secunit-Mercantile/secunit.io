@@ -18,40 +18,42 @@ const footerLinks = {
 };
 ---
 
-<footer class="border-t border-border bg-gray-50 dark:border-darkmode-border dark:bg-gray-900">
+<footer class="border-t" style="border-color: rgba(255, 255, 255, 0.06); background-color: rgb(var(--color-bg-secondary));">
  <div class="container section-sm">
   <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
    <!-- Brand -->
    <div class="lg:col-span-1">
     <a href="/" class="flex items-center">
-     <img 
-      src="/images/brand/horizontal.png" 
-      alt="Secunit Mercantile" 
+     <img
+      src="/images/brand/horizontal.png"
+      alt="Secunit Mercantile"
       class="h-10 w-auto"
       loading="lazy"
      />
     </a>
-    <p class="mt-4 text-sm text-body dark:text-darkmode-body">
+    <p class="mt-4 text-sm" style="color: rgb(var(--color-text-secondary))">
      Enterprise-grade security, DevOps, and AI consulting for growing businesses.
     </p>
     <!-- Social Links -->
     <div class="mt-6 flex gap-4">
-     <a 
-      href="https://linkedin.com/company/secunit-mercantile" 
+     <a
+      href="https://linkedin.com/company/secunit-mercantile"
       target="_blank"
       rel="noopener noreferrer"
-      class="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-200 text-body transition-colors hover:bg-primary hover:text-white dark:bg-gray-800 dark:text-darkmode-body dark:hover:bg-darkmode-primary"
+      class="flex h-10 w-10 items-center justify-center rounded-lg transition-all duration-300"
+      style="background-color: rgb(var(--color-bg-elevated)); color: rgb(var(--color-text-secondary));"
       aria-label="LinkedIn"
      >
       <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
       </svg>
      </a>
-     <a 
-      href="https://github.com/Secunit-Mercantile" 
+     <a
+      href="https://github.com/Secunit-Mercantile"
       target="_blank"
       rel="noopener noreferrer"
-      class="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-200 text-body transition-colors hover:bg-primary hover:text-white dark:bg-gray-800 dark:text-darkmode-body dark:hover:bg-darkmode-primary"
+      class="flex h-10 w-10 items-center justify-center rounded-lg transition-all duration-300"
+      style="background-color: rgb(var(--color-bg-elevated)); color: rgb(var(--color-text-secondary));"
       aria-label="GitHub"
      >
       <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
@@ -63,11 +65,11 @@ const footerLinks = {
 
    <!-- Services -->
    <div>
-    <h4 class="mb-4 font-semibold text-dark dark:text-white">Services</h4>
+    <h4 class="mb-4 font-semibold text-white">Services</h4>
     <ul class="space-y-3">
      {footerLinks.services.map((link) => (
       <li>
-       <a href={link.href} class="text-sm text-body hover:text-primary dark:text-darkmode-body dark:hover:text-darkmode-primary">
+       <a href={link.href} class="text-sm transition-colors duration-200 hover:text-[#20E3B2]" style="color: rgb(var(--color-text-secondary))">
         {link.label}
        </a>
       </li>
@@ -77,11 +79,11 @@ const footerLinks = {
 
    <!-- Company -->
    <div>
-    <h4 class="mb-4 font-semibold text-dark dark:text-white">Company</h4>
+    <h4 class="mb-4 font-semibold text-white">Company</h4>
     <ul class="space-y-3">
      {footerLinks.company.map((link) => (
       <li>
-       <a href={link.href} class="text-sm text-body hover:text-primary dark:text-darkmode-body dark:hover:text-darkmode-primary">
+       <a href={link.href} class="text-sm transition-colors duration-200 hover:text-[#20E3B2]" style="color: rgb(var(--color-text-secondary))">
         {link.label}
        </a>
       </li>
@@ -91,15 +93,15 @@ const footerLinks = {
 
    <!-- Contact -->
    <div>
-    <h4 class="mb-4 font-semibold text-dark dark:text-white">Contact</h4>
-    <ul class="space-y-3 text-sm text-body dark:text-darkmode-body">
+    <h4 class="mb-4 font-semibold text-white">Contact</h4>
+    <ul class="space-y-3 text-sm" style="color: rgb(var(--color-text-secondary))">
      <li>
-      <a href="mailto:hello@secunit.io" class="hover:text-primary dark:hover:text-darkmode-primary">
+      <a href="mailto:hello@secunit.io" class="transition-colors duration-200 hover:text-[#20E3B2]">
        hello@secunit.io
       </a>
      </li>
      <li>Charlotte, NC</li>
-     <li class="text-xs text-gray-500 dark:text-gray-500">
+     <li class="text-xs" style="color: rgb(var(--color-text-tertiary))">
       Remote-first — we work with clients nationwide
      </li>
     </ul>
@@ -107,13 +109,13 @@ const footerLinks = {
   </div>
 
   <!-- Bottom Bar -->
-  <div class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 md:flex-row dark:border-darkmode-border">
-   <p class="text-xs text-gray-500 dark:text-gray-500">
+  <div class="mt-12 flex flex-col items-center justify-between gap-4 border-t pt-8 md:flex-row" style="border-color: rgba(255, 255, 255, 0.06);">
+   <p class="text-xs" style="color: rgb(var(--color-text-tertiary))">
     © {currentYear} Secunit Mercantile LLC. All rights reserved.
    </p>
    <div class="flex gap-6">
     {footerLinks.legal.map((link) => (
-     <a href={link.href} class="text-xs text-gray-500 hover:text-primary dark:hover:text-darkmode-primary">
+     <a href={link.href} class="text-xs transition-colors duration-200 hover:text-[#20E3B2]" style="color: rgb(var(--color-text-tertiary))">
       {link.label}
      </a>
     ))}
@@ -121,3 +123,14 @@ const footerLinks = {
   </div>
  </div>
 </footer>
+
+<style>
+ footer a:hover {
+  color: #20E3B2 !important;
+ }
+
+ footer .social-link:hover {
+  background-color: #20E3B2 !important;
+  color: #0a0a0a !important;
+ }
+</style>

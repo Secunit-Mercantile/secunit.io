@@ -47,23 +47,22 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <meta property="twitter:description" content={description} />
   <meta property="twitter:image" content={new URL(ogImage, Astro.site)} />
   
-  <!-- Fonts - JetBrains Mono for monospace aesthetic -->
+  <!-- Fonts - Inter for body, JetBrains Mono for code -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  
-  <!-- Theme script (prevents flash) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Theme script (dark mode by default for GoWipeMe aesthetic) -->
   <script is:inline>
+   // GoWipeMe aesthetic defaults to dark mode
    const theme = (() => {
     if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
      return localStorage.getItem('theme');
     }
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-     return 'dark';
-    }
-    return 'light';
+    // Default to dark mode for the refined dark aesthetic
+    return 'dark';
    })();
-   
+
    if (theme === 'dark') {
     document.documentElement.classList.add('dark');
    } else {
