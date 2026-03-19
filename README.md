@@ -6,118 +6,55 @@ Enterprise-grade security, DevOps, and AI consulting for small and mid-sized bus
 
 ## Tech Stack
 
-- **Framework:** [Astro](https://astro.build/) v5
+- **Framework:** [Astro](https://astro.build/) v6
 - **Styling:** [Tailwind CSS](https://tailwindcss.com/) v3
-- **Hosting:** [Cloudflare Pages](https://pages.cloudflare.com/)
-- **Database:** [Cloudflare D1](https://developers.cloudflare.com/d1/) (SQLite)
+- **Runtime:** [Bun](https://bun.sh/) (local dev + production SSR)
+- **Hosting:** Self-hosted on Hetzner (GitHub Actions + self-hosted runner → see `deploy/README.md`)
+- **Database:** [Cloudflare D1](https://developers.cloudflare.com/d1/) (contact submissions via REST API from the Astro server)
 - **Email:** [Resend](https://resend.com/)
 
 ## Local Development
 
 ```bash
-# Install dependencies
-yarn install
-
-# Start dev server
-yarn dev
-
-# Build for production
-yarn build
-
-# Preview production build
-yarn preview
+bun install
+bun dev
+bun run build
+bun preview
 ```
 
 ## Deployment
 
-This site is automatically deployed to Cloudflare Pages when changes are pushed to the `main` branch.
-
-### Initial Setup
-
-1. **Connect GitHub to Cloudflare Pages:**
-   - Go to Cloudflare Dashboard → Pages → Create a project
-   - Connect your GitHub account and select this repository
-   - Build settings:
-     - Framework preset: Astro
-     - Build command: `yarn build`
-     - Build output directory: `dist`
-
-2. **Configure Environment Variables:**
-   In Cloudflare Pages → Settings → Environment variables, add:
-   - `RESEND_API_KEY` - Your Resend API key for email notifications
-   - `CONTACT_EMAIL` - Destination email for contact form (default: hello@secunit.io)
-
-3. **Bind D1 Database:**
-   In Cloudflare Pages → Settings → Functions → D1 database bindings:
-   - Variable name: `DB`
-   - D1 database: `secunit-contacts`
-
-4. **Configure Custom Domain:**
-   In Cloudflare Pages → Custom domains → Add:
-   - `secunit.io`
-   - `www.secunit.io` (redirect to apex)
+Pushes to `main` run `.github/workflows/deploy-prod.yml` on the **self-hosted** runner (labels `self-hosted`, `Linux`, `X64`). See **`deploy/README.md`** for paths, systemd, and Caddy.
 
 ## Project Structure
 
 ```
 secunit-website/
-├── functions/
-│   └── api/
-│       └── contact.ts      # Contact form handler (Pages Function)
-├── public/
-│   ├── favicon.svg
-│   └── robots.txt
+├── deploy/                  # Example systemd unit + production notes
+├── public/                  # Static assets (served as-is)
+├── scripts/                 # e.g. restart.sh (synced by deploy)
 ├── src/
 │   ├── components/
-│   │   ├── Header.astro
-│   │   ├── Footer.astro
-│   │   └── ThemeToggle.astro
 │   ├── layouts/
-│   │   └── Base.astro
 │   ├── pages/
-│   │   ├── index.astro     # Homepage
-│   │   ├── services.astro
-│   │   ├── about.astro
-│   │   ├── contact.astro
-│   │   ├── privacy.astro
-│   │   └── terms.astro
+│   │   └── api/             # Astro API routes (e.g. contact form)
 │   └── styles/
-│       └── global.css
 ├── astro.config.mjs
 ├── tailwind.config.mjs
 ├── tsconfig.json
-├── wrangler.toml           # Cloudflare bindings config
+├── wrangler.toml            # Optional: wrangler CLI + D1 admin
 └── package.json
 ```
 
 ## Contact Form
 
-The contact form stores submissions in Cloudflare D1 and sends email notifications via Resend.
+Submissions are stored in **Cloudflare D1** and notifications go through **Resend**. The handler lives at `src/pages/api/contact.ts` (SSR), not Cloudflare Pages Functions.
 
-### Database Schema
+### Database schema
 
-```sql
-CREATE TABLE contacts (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  created_at TEXT DEFAULT (datetime('now')),
-  name TEXT NOT NULL,
-  email TEXT NOT NULL,
-  company TEXT,
-  phone TEXT,
-  inquiry_type TEXT NOT NULL,
-  message TEXT NOT NULL,
-  referral_source TEXT,
-  page_url TEXT,
-  user_agent TEXT,
-  ip_address TEXT,
-  email_sent INTEGER DEFAULT 0,
-  status TEXT DEFAULT 'new'
-);
-```
+See `README` section in your D1 setup or `src/pages/api/contact.ts` for the expected table shape.
 
-### Exporting Contacts for CRM
-
-Query the D1 database to export contacts as JSON:
+### Exporting contacts (wrangler)
 
 ```bash
 wrangler d1 execute secunit-contacts --command="SELECT * FROM contacts WHERE status = 'new'"
@@ -129,6 +66,9 @@ wrangler d1 execute secunit-contacts --command="SELECT * FROM contacts WHERE sta
 |----------|-------------|----------|
 | `RESEND_API_KEY` | Resend API key for sending emails | Yes |
 | `CONTACT_EMAIL` | Destination email for form submissions | No (default: hello@secunit.io) |
+| `CLOUDFLARE_ACCOUNT_ID` | Cloudflare account ID (D1 REST API) | Yes for contact API |
+| `CLOUDFLARE_D1_DATABASE_ID` | D1 database ID | Yes for contact API |
+| `CLOUDFLARE_API_TOKEN` | Token with D1 read/write | Yes for contact API |
 
 ## License
 

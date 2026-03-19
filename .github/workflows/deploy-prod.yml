@@ -1,3 +1,6 @@
+# Self-hosted runner on the production VPS: build and copy into place (no SSH/rsync from GitHub).
+# `runs-on` matches labels (self-hosted, Linux, X64), not the runner display name (e.g. hetzner).
+
 name: Deploy to Production
 
 on:
@@ -6,17 +9,35 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  DEPLOY_PATH: /opt/secunit/web
+  RESTART_SCRIPT: /opt/secunit/bin/restart.sh
+
 jobs:
   deploy:
-    name: Deploy to Fly.io Production
-    runs-on: ubuntu-latest
+    name: Deploy (self-hosted)
+    runs-on: [self-hosted, Linux, X64]
     steps:
       - uses: actions/checkout@v4
-      
-      - uses: superfly/flyctl-actions/setup-flyctl@master
-      
-      - name: Deploy to Fly.io
-        run: flyctl deploy --remote-only
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build
+        run: bun run build
+        env:
+          ASTRO_SITE_URL: https://secunit.io
+
+      - name: Publish dist and restart script
+        run: |
+          mkdir -p "${DEPLOY_PATH}" /opt/secunit/bin
+          rsync -a --delete ./dist/ "${DEPLOY_PATH}/"
+          cp scripts/restart.sh "${RESTART_SCRIPT}"
+          chmod +x "${RESTART_SCRIPT}"
+
+      - name: Restart application
+        run: "${RESTART_SCRIPT}"

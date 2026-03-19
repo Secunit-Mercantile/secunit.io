@@ -64,8 +64,8 @@ The site features:
 - **Keystatic** - Git-based CMS (configured but optional)
 
 ### Deployment & Backend
-- **Fly.io** - Container hosting with SSR
-- **Cloudflare D1** - SQLite database for contact form (via REST API)
+- **Hetzner VPS** - Self-hosted SSR (Bun + systemd + Caddy; see `deploy/README.md`)
+- **Cloudflare D1** - SQLite database for contact form (via REST API from Astro)
 - **Resend API** - Email delivery service
 
 ### Build Tools
@@ -80,7 +80,7 @@ The site features:
 ### Build Process
 1. Astro compiles `.astro`, `.tsx`, and `.mdx` files
 2. Server bundle generated to `/dist` directory
-3. Docker container runs Node.js server on Fly.io
+3. Production: Bun runs `dist/server/entry.mjs` on the VPS (optional: `Dockerfile` for containerized runs)
 4. API routes handled via Astro SSR endpoints (`/api/*`)
 
 ### Rendering Strategy
@@ -111,9 +111,7 @@ Contact Form Submission
 
 ```
 secunit-website/
-├── functions/
-│   └── api/
-│       └── contact.ts           # Cloudflare Pages Function for contact form
+├── deploy/                      # Systemd example + production notes
 ├── public/
 │   ├── favicon.svg
 │   ├── favicons/                # Multiple favicon formats
@@ -184,16 +182,10 @@ secunit-website/
 ├── astro.config.mjs             # Astro configuration
 ├── tailwind.config.mjs          # Tailwind configuration
 ├── tsconfig.json                # TypeScript configuration
-├── fly.toml                     # Fly.io configuration
-├── Dockerfile                   # Docker build configuration
-├── fly.toml                     # Fly.io production configuration
-├── fly.dev.toml                 # Fly.io dev environment configuration
-├── Dockerfile                   # Docker build configuration (Bun + distroless)
+├── Dockerfile                   # Optional container image (Bun build + Node distroless runtime)
 ├── wrangler.toml                # Cloudflare D1 CLI config (for database management)
-├── netlify.toml                 # Legacy Netlify config (not used)
 ├── .github/workflows/           # GitHub Actions workflows
-│   ├── deploy-prod.yml          # Auto-deploy main branch to production
-│   └── deploy-dev.yml           # Auto-deploy dev branch to dev.secunit.io
+│   └── deploy-prod.yml          # Self-hosted runner → /opt/secunit/web
 ├── keystatic.config.tsx         # Keystatic CMS config
 └── starwind.config.json         # Starwind component registry
 ```

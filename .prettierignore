@@ -6,10 +6,10 @@ dist
 node_modules
 
 # lockfiles
+bun.lock
 pnpm-lock.yaml
 yarn.lock
 package-lock.json
-
 
 # Ingore netlify folders
 .netlify
@@ -18,9 +18,6 @@ netlify
 # Ignore MDX files as Keystatic expects a specific JSX component structure
 # IF using Keystatic, I recommend uncommenting the below line so you don't accidentally format things incorrectly
 # **/*.mdx
-
-# Ignore tours
-.tours
 
 # Standard
 **/.git
@@ -32,6 +29,7 @@ netlify
 **/package-lock.json
 **/yarn.lock
 **/pnpm-lock.yaml
+**/bun.lock
 
 # Scripts
 scripts/

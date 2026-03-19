@@ -8,7 +8,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "start": "node ./dist/server/entry.mjs",
+    "start": "bun ./dist/server/entry.mjs",
     "astro": "astro",
     "format": "prettier -w .",
     "lint": "eslint . --ext .astro,.js,.jsx,.ts,.tsx"

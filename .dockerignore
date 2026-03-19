@@ -30,10 +30,6 @@ Thumbs.db
 .eslintcache
 *.log
 
-# Cloudflare (no longer needed)
-wrangler.toml
-functions/
-
 # Misc
 .prettierignore
 .prettierrc

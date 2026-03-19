@@ -1,0 +1,25 @@
+# Example systemd unit — copy to /etc/systemd/system/secunit-io.service, then:
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now secunit-io
+#
+# Bun install path on this host: /opt/secunit/.bun/bin/bun
+# App root (Astro dist): /opt/secunit/web
+
+[Unit]
+Description=Secunit website (Astro SSR via Bun)
+After=network.target
+
+[Service]
+Type=simple
+User=secunit
+Group=secunit
+WorkingDirectory=/opt/secunit/web
+Environment=HOST=127.0.0.1
+Environment=PORT=4321
+Environment=NODE_ENV=production
+ExecStart=/opt/secunit/.bun/bin/bun /opt/secunit/web/server/entry.mjs
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

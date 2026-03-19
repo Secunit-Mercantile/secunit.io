@@ -1,0 +1,38 @@
+# Production (Hetzner + Caddy + Bun)
+
+Paths on the server:
+
+| Purpose        | Path                         |
+| -------------- | ---------------------------- |
+| Web / Astro `dist` | `/opt/secunit/web`       |
+| Bun binary     | `/opt/secunit/.bun/bin/bun`  |
+| Restart script | `/opt/secunit/bin/restart.sh` |
+
+## GitHub Actions (self-hosted runner)
+
+Deploy uses a **self-hosted runner** on this host (see `.github/workflows/deploy-prod.yml`). No `HETZNER_SSH_KEY` or inbound SSH from GitHub is required.
+
+1. [Add a self-hosted runner](https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/adding-self-hosted-runners) to this repository.
+2. The workflow uses **`runs-on: [self-hosted, Linux, X64]`**, which matches the default labels on a Linux x64 runner. The runner **name** in the UI (e.g. `hetzner`) is only cosmetic — jobs match **labels**, not the name. Add a custom label later if you get a second runner and need to target only this one.
+3. Ensure **`rsync`** is installed (`sudo apt install rsync` on Debian/Ubuntu).
+4. Run the runner service as user **`secunit`** so it can write to `/opt/secunit/web`, update `/opt/secunit/bin/restart.sh`, and run `restart.sh` (sudoers for `systemctl restart secunit-io.service`).
+
+**Security:** Self-hosted runners should not run workflows from untrusted forks. In the repo’s **Actions → General** settings, use **“Require approval for all outside collaborators”** or disable fork workflows as appropriate.
+
+## Systemd
+
+1. Copy `secunit-io.service` to `/etc/systemd/system/` (adjust `User`/`Group` if needed).
+2. `sudo systemctl daemon-reload && sudo systemctl enable --now secunit-io`
+3. Point Caddy at `127.0.0.1:4321` (or the `PORT` you set in the unit).
+
+## Manual restart
+
+```sh
+/opt/secunit/bin/restart.sh
+```
+
+**Sudoers** (for `secunit`):
+
+```sudoers
+secunit ALL=(ALL) NOPASSWD: /bin/systemctl restart secunit-io.service
+```
