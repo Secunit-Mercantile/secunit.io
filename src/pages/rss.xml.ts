@@ -1,6 +1,7 @@
 import rss from "@astrojs/rss";
 import { getLocalizedRoute } from "@/js/translationUtils";
 import { getCollection, type CollectionEntry } from "astro:content";
+import type { APIRoute } from "astro";
 
 // utils
 import { defaultLocale } from "@/config/siteSettings.json";
@@ -16,7 +17,7 @@ const rssLocale = defaultLocale;
 // this is needed for getAuthorName() and getAuthorEmail() below
 const authors: CollectionEntry<"authors">[] = await getCollection("authors");
 
-export async function GET(context) {
+export const GET: APIRoute = async (context) => {
   const posts = await getAllPosts(rssLocale);
 
   // TODO: (maybe?) handle multiple authors instead of just putting the first author's data
@@ -29,7 +30,7 @@ export async function GET(context) {
     description: siteData.description,
     // Pull in your project "site" from the endpoint context
     // https://docs.astro.build/en/reference/api-reference/#contextsite
-    site: context.site,
+    site: context.site ?? import.meta.env.SITE,
     // media is needed for blog posts. recommended to add atom support
     xmlns: {
       media: "http://search.yahoo.com/mrss/",
@@ -62,7 +63,7 @@ export async function GET(context) {
       link: getLocalizedRoute(rssLocale, `/blog/${post.id}/`),
     })),
   });
-}
+};
 
 // --------------------------------------------------------
 // map the post author slug to the author name

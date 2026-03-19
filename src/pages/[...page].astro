@@ -17,7 +17,7 @@ export const prerender = true;
 export async function getStaticPaths() {
  const otherPages: CollectionEntry<"otherPages">[] = await getCollection(
   "otherPages",
-  ({ data }) => {
+  ({ data }: CollectionEntry<"otherPages">) => {
    // filter out draft pages
    return data.draft !== true;
   },

@@ -33,7 +33,7 @@ import { locales } from "@/config/siteSettings.json";
 export async function getAllPosts(
   lang?: (typeof locales)[number],
 ): Promise<CollectionEntry<"blog">[]> {
-  const posts = await getCollection("blog", ({ data }) => {
+  const posts = await getCollection("blog", ({ data }: CollectionEntry<"blog">) => {
     // filter out draft posts
     return data.draft !== true;
   });
@@ -154,15 +154,15 @@ export function arePostsRelated(
     return false;
 
   const postOneCategories = postOne.data.categories
-    .filter((category): category is string => typeof category === "string")
-    .map((category) => slugify(category));
+    .filter((category: string | undefined): category is string => typeof category === "string")
+    .map((category: string) => slugify(category));
 
   const postTwoCategories = postTwo.data.categories
-    .filter((category): category is string => typeof category === "string")
-    .map((category) => slugify(category));
+    .filter((category: string | undefined): category is string => typeof category === "string")
+    .map((category: string) => slugify(category));
 
   // if any tags or categories match, return true
-  const categoriesMatch = postOneCategories.some((category) =>
+  const categoriesMatch = postOneCategories.some((category: string) =>
     postTwoCategories.includes(category),
   );
 
@@ -178,9 +178,9 @@ export function arePostsRelated(
  * note: return looks like { productivity: 2, 'cool-code': 1 }
  */
 
-export function countItems(items: string[]): object {
+export function countItems(items: string[]): Record<string, number> {
   // get counts of each item in the array
-  const countedItems = items.reduce((acc, item) => {
+  const countedItems = items.reduce<Record<string, number>>((acc, item) => {
     const val = acc[slugify(item)] || 0;
 
     return {
@@ -201,7 +201,7 @@ export function countItems(items: string[]): object {
  * note: return looks like [ [ 'productivity', 2 ], [ 'cool-code', 1 ] ]
  * note: this is used for tag and category cloud ordering
  */
-export function sortByValue(jsObj: object): [string, number][] {
+export function sortByValue(jsObj: Record<string, number>): [string, number][] {
   const array: [string, number][] = [];
   for (const i in jsObj) {
     array.push([i, jsObj[i]]);

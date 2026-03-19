@@ -11,7 +11,7 @@ import { defaultLocale } from "@/config/siteSettings.json";
 export const prerender = true;
 
 export async function getStaticPaths() {
- const careers = await getCollection("careers", ({ data }) => {
+ const careers = await getCollection("careers", ({ data }: CollectionEntry<"careers">) => {
   // filter out draft careers
   return data.draft !== true;
  });

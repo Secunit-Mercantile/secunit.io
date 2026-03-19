@@ -27,6 +27,7 @@ const { title, description, authors, pubDate, categories, updatedDate, heroImage
 const currLocale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(currLocale);
 const authorsData = await getEntries(authors);
+const resolvedAuthors = authorsData as CollectionEntry<"authors">[];
 ---
 
 <BaseLayout
@@ -41,7 +42,11 @@ const authorsData = await getEntries(authors);
   <!-- Hero Section -->
   <div class="relative mx-auto max-w-4xl pt-10">
    <div class="mb-8 flex flex-wrap justify-center gap-3">
-    {categories && categories.map((category) => <CategoryBadge category={category} />)}
+    {
+     categories
+      ?.filter((category: string | undefined): category is string => typeof category === "string")
+      .map((category: string) => <CategoryBadge category={category} />)
+    }
    </div>
 
    <h1 id="article-title" class="h2 mb-6 text-center text-pretty">
@@ -56,7 +61,7 @@ const authorsData = await getEntries(authors);
    <div class="mb-10 flex flex-col items-center justify-center">
     <div class="flex items-center gap-4">
      {
-      authorsData.map((author) => (
+      resolvedAuthors.map((author) => (
        <a
         href={author.data.authorLink}
         class="group flex items-center gap-3"

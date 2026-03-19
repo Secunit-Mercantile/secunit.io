@@ -14,7 +14,7 @@ interface Props {
  career: CollectionEntry<"careers">;
 }
 
-const { career } = Astro.props;
+const { career } = Astro.props as Props;
 const { title, location, type, description, requirements, applicationUrl, publishDate } =
  career.data;
 
@@ -76,7 +76,7 @@ const formattedDate = formatDate(publishDate, currLocale);
        <div>
         <h3 class="mb-4 text-xs">Requirements</h3>
         <ul class="space-y-2">
-         {requirements.map((requirement) => (
+         {requirements.map((requirement: string) => (
           <li class="flex items-start gap-2">
            <Icon name="tabler/check" class="text-primary mt-1 size-4" />
            <span>{requirement}</span>

@@ -1,5 +1,5 @@
 ---
-import { type InferGetStaticPropsType, type InferGetStaticParamsType } from "astro";
+import { type InferGetStaticParamsType } from "astro";
 
 // main layout
 import BaseLayout from "@/layouts/BaseLayout.astro";
@@ -32,7 +32,6 @@ export async function getStaticPaths() {
  }));
 }
 
-type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 type Params = InferGetStaticParamsType<typeof getStaticPaths>;
 
 // const filteredPosts = Astro.props as Props;
@@ -44,8 +43,8 @@ const filteredPosts = posts.filter((post) => {
  if (!post.data.categories) return false;
  // make sure to slugify them for comparison
  const slugifiedCategory = post.data.categories
-  .filter((category): category is string => typeof category === "string")
-  .map((category) => slugify(category));
+  .filter((category: string | undefined): category is string => typeof category === "string")
+  .map((category: string) => slugify(category));
 
  return slugifiedCategory.includes(category);
 });

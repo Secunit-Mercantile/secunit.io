@@ -14,7 +14,7 @@ interface GeneralProps {
 export interface BlogProps {
   type: "blog";
   postFrontmatter: CollectionEntry<"blog">["data"];
-  image: ImageMetadata; // result of getImage() from Seo.astro
+  image: { src: string }; // result of getImage() from Seo.astro or fallback image object
   authors: CollectionEntry<"authors">[];
   canonicalUrl: URL;
 }

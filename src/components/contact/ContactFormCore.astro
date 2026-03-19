@@ -1,0 +1,171 @@
+---
+interface Props {
+  formClass?: string;
+  submitClass?: string;
+}
+
+const { formClass = "space-y-6", submitClass = "btn-primary w-full" } = Astro.props;
+---
+
+<form id="contact-form" class={formClass} action="/api/contact" method="POST">
+  <div>
+    <label for="name" class="mb-2 block text-xs font-medium text-dark dark:text-white">
+      Name <span class="text-red-500">*</span>
+    </label>
+    <input type="text" id="name" name="name" required class="input" placeholder="Your name" />
+  </div>
+
+  <div>
+    <label for="email" class="mb-2 block text-xs font-medium text-dark dark:text-white">
+      Email <span class="text-red-500">*</span>
+    </label>
+    <input type="email" id="email" name="email" required class="input" placeholder="you@company.com" />
+  </div>
+
+  <div>
+    <label for="company" class="mb-2 block text-xs font-medium text-dark dark:text-white">Company</label>
+    <input type="text" id="company" name="company" class="input" placeholder="Your company name" />
+  </div>
+
+  <div>
+    <label for="phone" class="mb-2 block text-xs font-medium text-dark dark:text-white">Phone</label>
+    <input type="tel" id="phone" name="phone" class="input" placeholder="(555) 123-4567" />
+  </div>
+
+  <div>
+    <label for="inquiry_type" class="mb-2 block text-xs font-medium text-dark dark:text-white">
+      How can we help? <span class="text-red-500">*</span>
+    </label>
+    <select id="inquiry_type" name="inquiry_type" required class="select">
+      <option value="">Select an option</option>
+      <option value="AI Enablement">AI Enablement</option>
+      <option value="DevOps & SRE">DevOps & SRE</option>
+      <option value="Security & Compliance">Security & Compliance</option>
+      <option value="General Inquiry">General Inquiry</option>
+      <option value="Other">Other</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="message" class="mb-2 block text-xs font-medium text-dark dark:text-white">
+      Tell us more <span class="text-red-500">*</span>
+    </label>
+    <textarea
+      id="message"
+      name="message"
+      required
+      rows="5"
+      class="textarea"
+      placeholder="What challenges are you facing? What are you hoping to accomplish?"
+    ></textarea>
+  </div>
+
+  <div>
+    <label for="referral_source" class="mb-2 block text-xs font-medium text-dark dark:text-white">
+      How did you hear about us?
+    </label>
+    <select id="referral_source" name="referral_source" class="select">
+      <option value="">Select an option</option>
+      <option value="Google Search">Google Search</option>
+      <option value="LinkedIn">LinkedIn</option>
+      <option value="Referral">Referral</option>
+      <option value="Other">Other</option>
+    </select>
+  </div>
+
+  <div class="hidden" aria-hidden="true">
+    <input type="text" name="website" tabindex="-1" autocomplete="off" />
+  </div>
+
+  <div>
+    <button type="submit" class={submitClass}>
+      <span id="submit-text">Send Message</span>
+      <svg id="submit-spinner" class="ml-2 hidden h-5 w-5 animate-spin" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path
+          class="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+        ></path>
+      </svg>
+    </button>
+  </div>
+
+  <p class="text-center text-xs text-gray-500 dark:text-gray-400">
+    We'll only use your information to respond to your inquiry. No spam, ever.
+  </p>
+</form>
+
+<div id="success-message" class="hidden rounded-xl bg-green-50 p-8 text-center dark:bg-green-900/20">
+  <div
+    class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-green-600 dark:bg-green-900/50 dark:text-green-400"
+  >
+    <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+    </svg>
+  </div>
+  <h3 class="text-lg font-bold text-green-800 dark:text-green-300">Message Sent!</h3>
+  <p class="mt-2 text-green-700 dark:text-green-400">
+    Thanks for reaching out. We'll get back to you within one business day.
+  </p>
+</div>
+
+<div id="error-message" class="hidden rounded-xl bg-red-50 p-8 text-center dark:bg-red-900/20">
+  <div
+    class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red-100 text-red-600 dark:bg-red-900/50 dark:text-red-400"
+  >
+    <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+    </svg>
+  </div>
+  <h3 class="text-lg font-bold text-red-800 dark:text-red-300">Something went wrong</h3>
+  <p class="mt-2 text-red-700 dark:text-red-400">
+    Please try again or email us directly at <a href="mailto:hello@secunit.io" class="underline">hello@secunit.io</a>
+  </p>
+</div>
+
+<script>
+  const form = document.getElementById("contact-form") as HTMLFormElement;
+  const submitText = document.getElementById("submit-text");
+  const submitSpinner = document.getElementById("submit-spinner");
+  const successMessage = document.getElementById("success-message");
+  const errorMessage = document.getElementById("error-message");
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    successMessage?.classList.add("hidden");
+    errorMessage?.classList.add("hidden");
+
+    submitText!.textContent = "Sending...";
+    submitSpinner?.classList.remove("hidden");
+
+    const formData = new FormData(form);
+
+    if (formData.get("website")) {
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(Object.fromEntries(formData)),
+      });
+
+      if (response.ok) {
+        form.classList.add("hidden");
+        successMessage?.classList.remove("hidden");
+      } else {
+        throw new Error("Failed to submit");
+      }
+    } catch (_error) {
+      errorMessage?.classList.remove("hidden");
+    } finally {
+      submitText!.textContent = "Send Message";
+      submitSpinner?.classList.add("hidden");
+    }
+  });
+</script>

@@ -326,7 +326,7 @@ const pricingData = {
           />
 
           {group.features.map((feature) => {
-           const featureData = plan.features[feature.id];
+           const featureData = plan.features[feature.id as keyof typeof plan.features];
 
            return (
             <div

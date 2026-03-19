@@ -1,4 +1,4 @@
-import type { CollectionEntry, DataEntryMap } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 import { locales, defaultLocale } from "@/config/siteSettings.json";
 
 /**
@@ -37,7 +37,7 @@ export function getLocaleFromUrl(url: URL): (typeof locales)[number] {
  *
  * Your content collections should be paths like `src/data/blog/de/my-post.md` and `src/data/blog/en/my-post.md`
  */
-export function filterCollectionByLanguage<T extends keyof DataEntryMap>(
+export function filterCollectionByLanguage<T extends string>(
   collection: CollectionEntry<T>[],
   locale: (typeof locales)[number],
   removeLocale: boolean = true,

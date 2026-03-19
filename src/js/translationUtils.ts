@@ -1,6 +1,6 @@
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { getCollection } from "astro:content";
-import type { DataEntryMap } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 import {
   textTranslations,
   dataTranslations,
@@ -8,6 +8,11 @@ import {
   localizedCollections,
 } from "@/config/translationData.json";
 import { locales, defaultLocale } from "@/config/siteSettings.json";
+
+type Locale = (typeof locales)[number];
+type RouteTranslationsMap = Record<Locale, Record<string, string>>;
+type LocalizedCollectionsMap = Record<string, Record<Locale, string>>;
+type LocalizedCollectionKey = keyof typeof localizedCollections;
 
 /**
  * * text translation helper function
@@ -29,8 +34,8 @@ export function useTranslations(locale: keyof typeof textTranslations) {
   };
 }
 
-type Locale = keyof typeof dataTranslations;
-type DataKey<T extends Locale> = keyof (typeof dataTranslations)[T];
+type DataLocale = keyof typeof dataTranslations;
+type DataKey<T extends DataLocale> = keyof (typeof dataTranslations)[T];
 /**
  * * data file translation helper function
  * @param data: key in the data file to translate, like "siteData" or "navData"
@@ -46,7 +51,7 @@ type DataKey<T extends Locale> = keyof (typeof dataTranslations)[T];
  * const siteData = getTranslatedData("siteData", currLocale);
  * ```
  */
-export function getTranslatedData<T extends Locale, K extends DataKey<T>>(
+export function getTranslatedData<T extends DataLocale, K extends DataKey<T>>(
   data: K,
   locale: T,
 ): (typeof dataTranslations)[T][K] {
@@ -63,9 +68,9 @@ export function getTranslatedData<T extends Locale, K extends DataKey<T>>(
  * @returns The localized route string
  */
 export function getLocalizedRoute(
-  locale: (typeof locales)[number],
+  locale: Locale,
   baseRoute: string = "/",
-  options?: { baseLocale?: (typeof locales)[number] },
+  options?: { baseLocale?: Locale },
 ): string {
   const isExternalLink = /^(https?:\/\/|mailto:|tel:|sms:)/i.test(baseRoute);
   const isId = baseRoute.startsWith("#");
@@ -92,8 +97,9 @@ export function getLocalizedRoute(
     return locale === defaultLocale ? "/" : `/${locale}/`;
   }
 
-  const defaultTranslations = routeTranslations[assumedBaseLocale];
-  const localeTranslations = routeTranslations[locale];
+  const routeTranslationsMap = routeTranslations as unknown as RouteTranslationsMap;
+  const defaultTranslations = routeTranslationsMap[assumedBaseLocale];
+  const localeTranslations = routeTranslationsMap[locale];
 
   const segments = normalized.split("/");
 
@@ -152,7 +158,7 @@ async function getDynamicRouteTranslations(): Promise<Record<string, Record<stri
  * @returns new URL pathname as a string
  */
 export async function getLocalizedPathname(
-  locale: (typeof locales)[number],
+  locale: Locale,
   url: URL,
 ): Promise<string> {
   // Use cached dynamic route translations
@@ -165,7 +171,7 @@ export async function getLocalizedPathname(
     return Object.keys(obj).find((key) => obj[key] === value.replace(/\/$/, "").replace(/^\//, ""));
   };
 
-  let oldPath: string, currLocale: (typeof locales)[number];
+  let oldPath: string, currLocale: Locale;
   // @ts-expect-error the whole point of this is to check if lang is a valid locale
   if (locales.includes(lang)) {
     // remove locale from URL if it's already there
@@ -182,10 +188,7 @@ export async function getLocalizedPathname(
   const routeStringTrimmed = oldPath.replace(/\/$/, "").replace(/^\//, "");
 
   // first find out if the passed value maps to a key for route translations
-  const routeTranslationsKey = getKeyByValue(
-    dynamicRouteTranslations[currLocale],
-    routeStringTrimmed,
-  );
+  const routeTranslationsKey = getKeyByValue(dynamicRouteTranslations[currLocale], routeStringTrimmed);
 
   let translatedRoute: string;
 
@@ -241,17 +244,22 @@ export async function getLocalizedPathname(
  */
 export async function generateRouteTranslations() {
   // List of content collections to include
-  const collections = Object.keys(localizedCollections) as Array<keyof DataEntryMap>;
+  const collections = Object.keys(localizedCollections) as LocalizedCollectionKey[];
+  const localizedCollectionsMap = localizedCollections as unknown as LocalizedCollectionsMap;
 
   // Initialize base translations with existing static translations
+  const routeTranslationsMap = routeTranslations as unknown as RouteTranslationsMap;
   const dynamicRouteTranslations: Record<string, Record<string, string>> = Object.fromEntries(
-    Object.keys(routeTranslations).map((locale) => [locale, { ...routeTranslations[locale] }]),
+    Object.keys(routeTranslationsMap).map((locale) => [
+      locale,
+      { ...(routeTranslationsMap[locale as Locale] ?? {}) },
+    ]),
   );
 
   const allEntries = await Promise.all(
     collections.map(async (collection) => {
       const entries = await getCollection(collection);
-      return entries.map((entry) => ({ ...entry, collection }));
+      return entries.map((entry: CollectionEntry<typeof collection>) => ({ ...entry, collection }));
     }),
   );
 
@@ -261,14 +269,14 @@ export async function generateRouteTranslations() {
 
   let generatedMappingKeyCounter = 1;
 
-  allContent.forEach((entry) => {
+  allContent.forEach((entry: CollectionEntry<LocalizedCollectionKey> & { collection: LocalizedCollectionKey }) => {
     // Extract locale and slug from the entry ID (assumed format: "locale/slug")
     const [locale, slug] = entry.id.split("/");
 
     // Retrieve mappingKey from entry metadata, if available
     const mappingKey = "mappingKey" in entry.data ? entry.data.mappingKey : undefined;
 
-    const base = localizedCollections[entry.collection]?.[locale] ?? entry.collection;
+    const base = localizedCollectionsMap[entry.collection]?.[locale as Locale] ?? entry.collection;
 
     if (mappingKey) {
       if (!entriesByMapping[mappingKey]) {
@@ -287,7 +295,7 @@ export async function generateRouteTranslations() {
       const otherLocales = locales.filter((l: string) => l !== locale);
       // For each other locale, map to the appropriate base with the same entry slug
       otherLocales.forEach((otherLocale: string) => {
-        const otherBase = localizedCollections[entry.collection]?.[otherLocale] ?? entry.collection;
+        const otherBase = localizedCollectionsMap[entry.collection]?.[otherLocale as Locale] ?? entry.collection;
         entriesByMapping[generatedKey][otherLocale] = `${otherBase}/${slug}`;
       });
     }

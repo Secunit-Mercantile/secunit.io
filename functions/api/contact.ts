@@ -18,7 +18,12 @@ interface ContactForm {
   website?: string; // honeypot
 }
 
-export const onRequestPost: PagesFunction<Env> = async (context) => {
+type ContactContext = {
+  request: Request;
+  env: Env;
+};
+
+export const onRequestPost = async (context: ContactContext) => {
   const { request, env } = context;
   
   try {

@@ -6,7 +6,6 @@ import MenuIcon from "@tabler/icons/outline/menu.svg";
 import NavLink from "@/components/nav/NavLink.astro";
 import MobileNavDropdown from "@/components/nav/MobileNav/MobileNavDropdown.astro";
 import Button from "@/components/button/Button.astro";
-import MobileLanguageSelect from "@/components/language-select/MobileLanguageSelect.astro";
 import ThemeToggle from "@/components/theme-toggle/ThemeToggle.astro";
 
 // utils
@@ -16,7 +15,6 @@ import { getTranslatedData } from "@/js/translationUtils";
 // data
 const currLocale = getLocaleFromUrl(Astro.url);
 const navData = getTranslatedData("navData", currLocale);
-import { locales } from "@/config/siteSettings.json";
 ---
 
 <div id="mobile-nav__container">

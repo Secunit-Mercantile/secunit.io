@@ -25,14 +25,15 @@ export default function initTiltCards() {
     // Mouse move event for tilt effect
     card.addEventListener(
       "mousemove",
-      (e: MouseEvent) => {
+      (e: Event) => {
+        const mouseEvent = e as MouseEvent;
         const rect = card.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
 
         // Calculate mouse position relative to card center (in percentage)
-        const mouseX = (e.clientX - centerX) / (rect.width / 2);
-        const mouseY = (e.clientY - centerY) / (rect.height / 2);
+        const mouseX = (mouseEvent.clientX - centerX) / (rect.width / 2);
+        const mouseY = (mouseEvent.clientY - centerY) / (rect.height / 2);
 
         // Calculate tilt angles
         const tiltX = -mouseY * maxTilt;

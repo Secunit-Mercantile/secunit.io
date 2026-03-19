@@ -64,6 +64,10 @@ const currLocale = getLocaleFromUrl(Astro.url);
   {description}
  </p>
  <div class="flex flex-wrap gap-3">
-  {categories?.map((category) => <CategoryBadge category={category} />)}
+  {
+   categories
+    ?.filter((category: string | undefined): category is string => typeof category === "string")
+    .map((category: string) => <CategoryBadge category={category} />)
+  }
  </div>
 </article>

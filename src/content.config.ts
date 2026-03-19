@@ -1,4 +1,5 @@
-import { defineCollection, reference, z } from "astro:content";
+import { defineCollection, reference } from "astro:content";
+import { z } from "astro/zod";
 import { glob } from "astro/loaders";
 
 // Type-check frontmatter using a schema
@@ -66,7 +67,7 @@ const careersCollection = defineCollection({
       type: z.enum(["Full-time", "Part-time", "Contract", "Remote"]),
       description: z.string(),
       requirements: z.array(z.string()),
-      applicationUrl: z.string().url(),
+      applicationUrl: z.url(),
       publishDate: z
         .string()
         .or(z.date())

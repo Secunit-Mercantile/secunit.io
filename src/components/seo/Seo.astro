@@ -35,7 +35,7 @@ interface BlogProps extends BaseProps {
 
 const { type, title, description, image, noindex = false } = Astro.props as GenProps | BlogProps;
 
-let optimizedImage;
+let optimizedImage: Awaited<ReturnType<typeof getImage>> | undefined;
 let jsonLD;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 
@@ -52,7 +52,7 @@ if (image) {
 if (type === "blog") {
  const { authors, postFrontmatter } = Astro.props as BlogProps;
 
- const jsonldImage = image ? optimizedImage : siteData.defaultImage;
+ const jsonldImage = image && optimizedImage ? optimizedImage : { src: siteData.defaultImage.src };
 
  jsonLD = jsonLDGenerator({
   type: "blog",

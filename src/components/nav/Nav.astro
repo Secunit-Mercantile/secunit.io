@@ -6,7 +6,6 @@ import MegaMenuDropdownToggle from "./NavDropdown/MegaMenuDropdownToggle.astro";
 import MobileNav from "@/components/nav/MobileNav/MobileNav.astro";
 import SiteLogo from "@/components/site-logo/SiteLogo.astro";
 import Button from "@/components/button/Button.astro";
-import LanguageSelect from "@/components/language-select/LanguageSelect.astro";
 import ThemeToggle from "@/components/theme-toggle/ThemeToggle.astro";
 
 // utils
@@ -16,7 +15,6 @@ import { getTranslatedData } from "@/js/translationUtils";
 // data
 const currLocale = getLocaleFromUrl(Astro.url);
 const navData = getTranslatedData("navData", currLocale);
-import { locales } from "@/config/siteSettings.json";
 // console.log(JSON.stringify(navData, null, 2));
 ---
 
