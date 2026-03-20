@@ -1,4 +1,6 @@
-# Production (Hetzner + Caddy + Bun)
+# Production (Hetzner + Bun)
+
+TLS termination and reverse proxy (e.g. Caddy) for `secunit.io` live in your **separate infra / edge repo** — not in this project.
 
 Paths on the server:
 
@@ -23,7 +25,7 @@ Deploy uses a **self-hosted runner** on this host (see `.github/workflows/deploy
 
 1. Copy `secunit-io.service` to `/etc/systemd/system/` (adjust `User`/`Group` if needed).
 2. `sudo systemctl daemon-reload && sudo systemctl enable --now secunit-io`
-3. Point Caddy at `127.0.0.1:4321` (or the `PORT` you set in the unit).
+3. In your reverse proxy config (other repo), proxy to **`127.0.0.1:4321`** (or the **`PORT`** in the unit).
 
 ## Manual restart
 

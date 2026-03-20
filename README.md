@@ -24,7 +24,7 @@ bun preview
 
 ## Deployment
 
-Pushes to `main` run `.github/workflows/deploy-prod.yml` on the **self-hosted** runner (labels `self-hosted`, `Linux`, `X64`). See **`deploy/README.md`** for paths, systemd, and Caddy.
+Pushes to `main` run `.github/workflows/deploy-prod.yml` on the **self-hosted** runner (labels `self-hosted`, `Linux`, `X64`). See **`deploy/README.md`** for paths and systemd (reverse proxy is maintained elsewhere).
 
 ## Project Structure
 
