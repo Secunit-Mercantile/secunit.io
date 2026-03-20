@@ -36,10 +36,19 @@ jobs:
         env:
           ASTRO_SITE_URL: https://secunit.io
 
+      # Standalone server still resolves some packages from node_modules at runtime (e.g. piccolore).
+      # Exclude manifests + node_modules from rsync --delete so pnpm install output is not wiped.
       # Assumes /opt/secunit.io (secunit home) and children web/ + bin/ already exist and are writable.
-      - name: Publish dist and restart script
+      - name: Publish dist, production deps, and restart script
         run: |
-          rsync -a --delete ./dist/ "${DEPLOY_PATH}/"
+          rsync -a --delete \
+            --exclude node_modules \
+            --exclude package.json \
+            --exclude pnpm-lock.yaml \
+            --exclude .npmrc \
+            ./dist/ "${DEPLOY_PATH}/"
+          cp package.json pnpm-lock.yaml .npmrc "${DEPLOY_PATH}/"
+          (cd "${DEPLOY_PATH}" && pnpm install --prod --frozen-lockfile)
           cp scripts/restart.sh "${RESTART_SCRIPT}"
           chmod +x "${RESTART_SCRIPT}"
 

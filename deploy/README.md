@@ -8,9 +8,11 @@ Paths on the server:
 
 | Purpose        | Path                         |
 | -------------- | ---------------------------- |
-| Web / Astro `dist` | `/opt/secunit.io/web`       |
-| Node.js        | e.g. `/usr/bin/node` (systemd `ExecStart`; match `engines.node` in `package.json`) |
+| App root (build output + deps) | `/opt/secunit.io/web` — `server/`, `client/`, **`node_modules/`**, `package.json`, `pnpm-lock.yaml`, `.npmrc` |
+| Node.js        | e.g. nvm path or `/usr/bin/node` (systemd `ExecStart`; match `engines.node` in `package.json`) |
 | Restart script | `/opt/secunit.io/bin/restart.sh` |
+
+The deploy workflow rsyncs **`dist/`** into `web/`, copies **`package.json`**, **`pnpm-lock.yaml`**, **`.npmrc`**, then runs **`pnpm install --prod`** in `web/` so runtime imports (e.g. from the Astro standalone server) resolve. **`rsync --delete` excludes `node_modules`** so production deps are not removed each run.
 
 Create **`web/`** and **`bin/`** under `/opt/secunit.io` once (if missing) so the deploy job never has to create the home directory itself:
 
