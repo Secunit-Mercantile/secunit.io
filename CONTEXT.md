@@ -185,7 +185,7 @@ secunit-website/
 ├── Dockerfile                   # Optional container image (Bun build + Node distroless runtime)
 ├── wrangler.toml                # Cloudflare D1 CLI config (for database management)
 ├── .github/workflows/           # GitHub Actions workflows
-│   └── deploy-prod.yml          # Self-hosted runner → /opt/secunit/web
+│   └── deploy-prod.yml          # Self-hosted runner → /opt/secunit.io/web
 ├── keystatic.config.tsx         # Keystatic CMS config
 └── starwind.config.json         # Starwind component registry
 ```

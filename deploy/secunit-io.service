@@ -2,8 +2,8 @@
 #   sudo systemctl daemon-reload
 #   sudo systemctl enable --now secunit-io
 #
-# Bun install path on this host: /opt/secunit/.bun/bin/bun
-# App root (Astro dist): /opt/secunit/web
+# Bun install path on this host: /opt/secunit.io/.bun/bin/bun
+# App root (Astro dist): /opt/secunit.io/web
 
 [Unit]
 Description=Secunit website (Astro SSR via Bun)
@@ -13,11 +13,11 @@ After=network.target
 Type=simple
 User=secunit
 Group=secunit
-WorkingDirectory=/opt/secunit/web
+WorkingDirectory=/opt/secunit.io/web
 Environment=HOST=127.0.0.1
 Environment=PORT=4321
 Environment=NODE_ENV=production
-ExecStart=/opt/secunit/.bun/bin/bun /opt/secunit/web/server/entry.mjs
+ExecStart=/opt/secunit.io/.bun/bin/bun /opt/secunit.io/web/server/entry.mjs
 Restart=on-failure
 RestartSec=3
 

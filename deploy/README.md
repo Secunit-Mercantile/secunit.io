@@ -6,14 +6,14 @@ Paths on the server:
 
 | Purpose        | Path                         |
 | -------------- | ---------------------------- |
-| Web / Astro `dist` | `/opt/secunit/web`       |
-| Bun binary     | `/opt/secunit/.bun/bin/bun`  |
-| Restart script | `/opt/secunit/bin/restart.sh` |
+| Web / Astro `dist` | `/opt/secunit.io/web`       |
+| Bun binary     | `/opt/secunit.io/.bun/bin/bun`  |
+| Restart script | `/opt/secunit.io/bin/restart.sh` |
 
-Create **`web/`** and **`bin/`** under `/opt/secunit` once (if missing) so the deploy job never has to create the home directory itself:
+Create **`web/`** and **`bin/`** under `/opt/secunit.io` once (if missing) so the deploy job never has to create the home directory itself:
 
 ```sh
-mkdir -p /opt/secunit/web /opt/secunit/bin
+mkdir -p /opt/secunit.io/web /opt/secunit.io/bin
 ```
 
 (Run as `secunit` or fix ownership so the runner user can write there.)
@@ -25,7 +25,7 @@ Deploy uses a **self-hosted runner** on this host (see `.github/workflows/deploy
 1. [Add a self-hosted runner](https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/adding-self-hosted-runners) to this repository.
 2. The workflow uses **`runs-on: [self-hosted, Linux, X64]`**, which matches the default labels on a Linux x64 runner. The runner **name** in the UI (e.g. `hetzner`) is only cosmetic — jobs match **labels**, not the name. Add a custom label later if you get a second runner and need to target only this one.
 3. Ensure **`rsync`** is installed (`sudo apt install rsync` on Debian/Ubuntu).
-4. Run the runner service as user **`secunit`** so it can write to `/opt/secunit/web`, update `/opt/secunit/bin/restart.sh`, and run `restart.sh` (sudoers for `systemctl restart secunit-io.service`).
+4. Run the runner service as user **`secunit`** so it can write to `/opt/secunit.io/web`, update `/opt/secunit.io/bin/restart.sh`, and run `restart.sh` (sudoers for `systemctl restart secunit-io.service`).
 
 **Security:** Self-hosted runners should not run workflows from untrusted forks. In the repo’s **Actions → General** settings, use **“Require approval for all outside collaborators”** or disable fork workflows as appropriate.
 
@@ -38,7 +38,7 @@ Deploy uses a **self-hosted runner** on this host (see `.github/workflows/deploy
 ## Manual restart
 
 ```sh
-/opt/secunit/bin/restart.sh
+/opt/secunit.io/bin/restart.sh
 ```
 
 **Sudoers** (for `secunit`):

@@ -10,8 +10,8 @@ on:
   workflow_dispatch:
 
 env:
-  DEPLOY_PATH: /opt/secunit/web
-  RESTART_SCRIPT: /opt/secunit/bin/restart.sh
+  DEPLOY_PATH: /opt/secunit.io/web
+  RESTART_SCRIPT: /opt/secunit.io/bin/restart.sh
 
 jobs:
   deploy:
@@ -32,7 +32,7 @@ jobs:
         env:
           ASTRO_SITE_URL: https://secunit.io
 
-      # Assumes /opt/secunit (secunit home) and children web/ + bin/ already exist and are writable.
+      # Assumes /opt/secunit.io (secunit home) and children web/ + bin/ already exist and are writable.
       - name: Publish dist and restart script
         run: |
           rsync -a --delete ./dist/ "${DEPLOY_PATH}/"
