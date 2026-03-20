@@ -1,10 +1,9 @@
 import fs from "fs";
 function detectPackageManager() {
     const lockFiles = {
-        "package-lock.json": "npm",
-        "bun.lockb": "bun",
-        "yarn.lock": "yarn",
         "pnpm-lock.yaml": "pnpm",
+        "yarn.lock": "yarn",
+        "package-lock.json": "npm",
     };
     try {
         const files = fs.readdirSync(process.cwd());

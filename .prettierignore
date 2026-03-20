@@ -6,7 +6,6 @@ dist
 node_modules
 
 # lockfiles
-bun.lock
 pnpm-lock.yaml
 yarn.lock
 package-lock.json
@@ -29,7 +28,6 @@ netlify
 **/package-lock.json
 **/yarn.lock
 **/pnpm-lock.yaml
-**/bun.lock
 
 # Scripts
 scripts/

@@ -12,7 +12,6 @@ function getUninstallCommand(packageManager, packages) {
         npm: `npm uninstall ${packages.join(" ")}`,
         yarn: `yarn remove ${packages.join(" ")}`,
         pnpm: `pnpm remove ${packages.join(" ")}`,
-        bun: `bun remove ${packages.join(" ")}`,
     };
     return commands[packageManager];
 }

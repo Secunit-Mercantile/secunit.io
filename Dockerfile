@@ -1,40 +1,31 @@
-# Build stage
-FROM oven/bun:1-alpine AS builder
+# Build stage: Node + pnpm (matches package.json packageManager)
+FROM node:24-alpine AS builder
+
+RUN corepack enable pnpm
 
 WORKDIR /app
 
-# Copy package files
-COPY package.json bun.lock ./
+COPY package.json pnpm-lock.yaml ./
 
-# Install dependencies
-RUN bun install --frozen-lockfile
+RUN pnpm install --frozen-lockfile
 
-# Copy source files
 COPY . .
 
-# Build the application
-RUN bun run build
+RUN pnpm run build
 
-# Production stage
-FROM gcr.io/distroless/nodejs22-debian12:nonroot AS runner
+# Production: distroless Node (matches engines.node >= 24)
+FROM gcr.io/distroless/nodejs24-debian13:nonroot AS runner
 
 WORKDIR /app
 
-# Copy built application from builder stage
-# distroless:nonroot uses uid:gid 65532:65532
-COPY --from=builder --chown=65532:65532 /app/dist ./dist
-COPY --from=builder --chown=65532:65532 /app/node_modules ./node_modules
-COPY --from=builder --chown=65532:65532 /app/package.json ./package.json
+COPY --from=builder --chown=nonroot:nonroot /app/dist ./dist
+COPY --from=builder --chown=nonroot:nonroot /app/node_modules ./node_modules
+COPY --from=builder --chown=nonroot:nonroot /app/package.json ./package.json
 
-# Expose the port Astro runs on
 EXPOSE 4321
 
-# Set environment variables
 ENV HOST=0.0.0.0
 ENV PORT=4321
 ENV NODE_ENV=production
 
-# Start the server
-# distroless:nonroot already runs as non-root user (65532)
 CMD ["./dist/server/entry.mjs"]
-

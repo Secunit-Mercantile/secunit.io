@@ -64,12 +64,12 @@ The site features:
 - **Keystatic** - Git-based CMS (configured but optional)
 
 ### Deployment & Backend
-- **Hetzner VPS** - Self-hosted SSR (Bun + systemd + Caddy; see `deploy/README.md`)
+- **Hetzner VPS** - Self-hosted SSR (Node + systemd + reverse proxy; see `deploy/README.md`)
 - **Cloudflare D1** - SQLite database for contact form (via REST API from Astro)
 - **Resend API** - Email delivery service
 
 ### Build Tools
-- **Bun** - Package manager and runtime
+- **pnpm** - Package manager; **Node.js 24+** - runtime
 - **Prettier** - Code formatting
 - **ESLint** - Linting (configured via eslint.config.mjs)
 
@@ -80,7 +80,7 @@ The site features:
 ### Build Process
 1. Astro compiles `.astro`, `.tsx`, and `.mdx` files
 2. Server bundle generated to `/dist` directory
-3. Production: Bun runs `dist/server/entry.mjs` on the VPS (optional: `Dockerfile` for containerized runs)
+3. Production: Node runs `dist/server/entry.mjs` on the VPS (optional: `Dockerfile` for containerized runs)
 4. API routes handled via Astro SSR endpoints (`/api/*`)
 
 ### Rendering Strategy
@@ -182,7 +182,7 @@ secunit-website/
 ├── astro.config.mjs             # Astro configuration
 ├── tailwind.config.mjs          # Tailwind configuration
 ├── tsconfig.json                # TypeScript configuration
-├── Dockerfile                   # Optional container image (Bun build + Node distroless runtime)
+├── Dockerfile                   # Optional container image (pnpm build + distroless Node)
 ├── wrangler.toml                # Cloudflare D1 CLI config (for database management)
 ├── .github/workflows/           # GitHub Actions workflows
 │   └── deploy-prod.yml          # Self-hosted runner → /opt/secunit.io/web
@@ -485,16 +485,16 @@ fly deploy
 
 ```bash
 # Install dependencies
-bun install
+pnpm install
 
 # Build for production
-bun run build
+pnpm run build
 
 # Start production server locally
-bun run start
+pnpm run start
 
 # Preview with Astro dev server
-bun run dev
+pnpm run dev
 ```
 
 **Build Output:**
@@ -506,7 +506,7 @@ bun run dev
 ### Docker Build
 
 The `Dockerfile` uses a multi-stage build:
-1. **Builder stage:** Uses `oven/bun:1-alpine` to install dependencies and build Astro
+1. **Builder stage:** Uses `node:24-alpine` + `pnpm` to install dependencies and build Astro
 2. **Runner stage:** Uses `gcr.io/distroless/nodejs22-debian12:nonroot` - minimal, secure image with no shell or unnecessary tools
 
 ```bash
@@ -554,13 +554,13 @@ See `DEV_SETUP.md` for complete dev environment setup instructions.
 
 ```bash
 # Start dev server (http://localhost:4321)
-bun run dev
+pnpm run dev
 
 # Format code
-bun run format
+pnpm run format
 
 # Lint code
-bun run lint
+pnpm run lint
 ```
 
 ### Adding a New Page

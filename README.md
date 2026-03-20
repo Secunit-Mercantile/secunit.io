@@ -8,7 +8,7 @@ Enterprise-grade security, DevOps, and AI consulting for small and mid-sized bus
 
 - **Framework:** [Astro](https://astro.build/) v6
 - **Styling:** [Tailwind CSS](https://tailwindcss.com/) v3
-- **Runtime:** [Bun](https://bun.sh/) (local dev + production SSR)
+- **Tooling:** [pnpm](https://pnpm.io/) + **[Node.js](https://nodejs.org/)** 24+ (`packageManager` / `engines` in `package.json`); production SSR via `@astrojs/node`
 - **Hosting:** Self-hosted on Hetzner (GitHub Actions + self-hosted runner → see `deploy/README.md`)
 - **Database:** [Cloudflare D1](https://developers.cloudflare.com/d1/) (contact submissions via REST API from the Astro server)
 - **Email:** [Resend](https://resend.com/)
@@ -16,10 +16,10 @@ Enterprise-grade security, DevOps, and AI consulting for small and mid-sized bus
 ## Local Development
 
 ```bash
-bun install
-bun dev
-bun run build
-bun preview
+pnpm install
+pnpm dev
+pnpm run build
+pnpm preview
 ```
 
 ## Deployment
@@ -42,6 +42,7 @@ secunit-website/
 ├── astro.config.mjs
 ├── tailwind.config.mjs
 ├── tsconfig.json
+├── pnpm-lock.yaml
 ├── wrangler.toml            # Optional: wrangler CLI + D1 admin
 └── package.json
 ```

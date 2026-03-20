@@ -4,11 +4,15 @@
   "description": "Secunit Mercantile - Security, DevOps & AI Consulting",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@10.30.3",
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "start": "bun ./dist/server/entry.mjs",
+    "start": "node ./dist/server/entry.mjs",
     "astro": "astro",
     "format": "prettier -w .",
     "lint": "eslint . --ext .astro,.js,.jsx,.ts,.tsx"
@@ -43,7 +47,6 @@
     "prettier": "^3.8.1",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.6.14",
-    "typescript": "^5.9.3",
-    "@types/bun": "latest"
+    "typescript": "^5.9.3"
   }
 }
