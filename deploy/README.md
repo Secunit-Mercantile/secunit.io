@@ -10,6 +10,14 @@ Paths on the server:
 | Bun binary     | `/opt/secunit/.bun/bin/bun`  |
 | Restart script | `/opt/secunit/bin/restart.sh` |
 
+Create **`web/`** and **`bin/`** under `/opt/secunit` once (if missing) so the deploy job never has to create the home directory itself:
+
+```sh
+mkdir -p /opt/secunit/web /opt/secunit/bin
+```
+
+(Run as `secunit` or fix ownership so the runner user can write there.)
+
 ## GitHub Actions (self-hosted runner)
 
 Deploy uses a **self-hosted runner** on this host (see `.github/workflows/deploy-prod.yml`). No `HETZNER_SSH_KEY` or inbound SSH from GitHub is required.

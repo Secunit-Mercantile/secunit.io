@@ -32,9 +32,9 @@ jobs:
         env:
           ASTRO_SITE_URL: https://secunit.io
 
+      # Assumes /opt/secunit (secunit home) and children web/ + bin/ already exist and are writable.
       - name: Publish dist and restart script
         run: |
-          mkdir -p "${DEPLOY_PATH}" /opt/secunit/bin
           rsync -a --delete ./dist/ "${DEPLOY_PATH}/"
           cp scripts/restart.sh "${RESTART_SCRIPT}"
           chmod +x "${RESTART_SCRIPT}"
