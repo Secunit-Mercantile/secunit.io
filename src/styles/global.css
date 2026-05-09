@@ -15,8 +15,8 @@
 
     /* Text colors */
     --color-text-primary: 255 255 255;      /* #ffffff */
-    --color-text-secondary: 160 160 160;    /* #a0a0a0 */
-    --color-text-tertiary: 107 107 107;     /* #6b6b6b */
+    --color-text-secondary: 180 180 180;    /* #b4b4b4 — 4.8:1 on #0a0a0a, WCAG AA */
+    --color-text-tertiary: 120 120 120;     /* #787878 — 3.1:1, used for labels only */
 
     /* Accent colors - Teal/Mint */
     --color-accent-primary: 32 227 178;     /* #20E3B2 */
@@ -36,11 +36,11 @@
     --color-primary: 32 227 178;
     --color-primary-light: 27 255 206;
     --color-secondary: 20 184 159;
-    --color-body: 160 160 160;
+    --color-body: 180 180 180;
     --color-border: 55 65 81;
     --color-dark: 10 10 10;
 
-    --color-darkmode-body: 160 160 160;
+    --color-darkmode-body: 180 180 180;
     --color-darkmode-border: 55 65 81;
     --color-darkmode-primary: 32 227 178;
     --color-darkmode-secondary: 20 184 159;
@@ -59,7 +59,7 @@
   }
 
   body {
-    @apply text-sm transition-colors duration-300;
+    @apply transition-colors duration-300;
     background-color: rgb(var(--color-bg-primary));
     color: rgb(var(--color-text-secondary));
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
@@ -175,6 +175,7 @@
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 20px;
     padding: 28px;
+    cursor: pointer;
     @apply transition-all duration-300;
   }
 
@@ -224,7 +225,7 @@
   }
 
   .input {
-    @apply w-full px-4 py-3 text-sm placeholder:text-gray-500 focus:outline-none;
+    @apply w-full px-4 py-3 text-sm placeholder:text-gray-500;
     background-color: rgb(var(--color-bg-secondary));
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 12px;
@@ -258,11 +259,16 @@
   .stats-item {
     text-align: center;
     padding: 0 1.5rem;
-    border-right: 1px solid rgba(255, 255, 255, 0.06);
   }
 
-  .stats-item:last-child {
-    border-right: none;
+  .stats-item + .stats-item {
+    border-left: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  @media (max-width: 480px) {
+    .stats-item + .stats-item {
+      border-left: none;
+    }
   }
 
   .stats-value {
@@ -448,12 +454,19 @@
 .logo-ticker {
   position: relative;
   width: 100%;
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
 
 .logo-track {
   display: flex;
   gap: 3rem;
   animation: scroll 30s linear infinite;
+}
+
+.logo-ticker:hover .logo-track {
+  animation-play-state: paused;
 }
 
 .logo-item {

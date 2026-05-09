@@ -1,0 +1,316 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1778328475003,
+  "projectRoot": "/Users/mat/Documents/code/secunit-website",
+  "techStack": {
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": ">=24.0.0",
+        "confidence": "high",
+        "markers": [
+          "package.json"
+        ]
+      },
+      {
+        "name": "TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "tsconfig.json"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "astro",
+        "version": "6.0.6",
+        "category": "fullstack"
+      },
+      {
+        "name": "react",
+        "version": "19.2.4",
+        "category": "frontend"
+      },
+      {
+        "name": "react-dom",
+        "version": "19.2.4",
+        "category": "frontend"
+      }
+    ],
+    "packageManager": "pnpm",
+    "runtime": "Node.js 24.0.0"
+  },
+  "build": {
+    "buildCommand": "pnpm run build 2>&1 | tail -30",
+    "testCommand": null,
+    "lintCommand": "pnpm lint",
+    "devCommand": "pnpm dev",
+    "scripts": {
+      "dev": "astro dev",
+      "build": "astro build",
+      "preview": "astro preview",
+      "start": "node ./dist/server/entry.mjs",
+      "astro": "astro",
+      "format": "prettier -w .",
+      "lint": "eslint . --ext .astro,.js,.jsx,.ts,.tsx"
+    }
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": "ES modules",
+    "testPattern": null,
+    "fileOrganization": "type-based"
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "docs",
+      "public",
+      "scripts",
+      "src"
+    ],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "deploy": {
+      "path": "deploy",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1778328474966,
+      "keyFiles": [
+        "README.md",
+        "secunit-io.service"
+      ]
+    },
+    "dist": {
+      "path": "dist",
+      "purpose": "Distribution/build output",
+      "fileCount": 0,
+      "lastAccessed": 1778328474967,
+      "keyFiles": []
+    },
+    "docs": {
+      "path": "docs",
+      "purpose": "Documentation",
+      "fileCount": 1,
+      "lastAccessed": 1778328474991,
+      "keyFiles": [
+        "brand-guardrails.md"
+      ]
+    },
+    "public": {
+      "path": "public",
+      "purpose": "Public files",
+      "fileCount": 3,
+      "lastAccessed": 1778328474992,
+      "keyFiles": [
+        "favicon.svg",
+        "robots.txt"
+      ]
+    },
+    "scripts": {
+      "path": "scripts",
+      "purpose": "Build/utility scripts",
+      "fileCount": 3,
+      "lastAccessed": 1778328474993,
+      "keyFiles": [
+        "config-i18n.js",
+        "remove-keystatic.js",
+        "restart.sh"
+      ]
+    },
+    "src": {
+      "path": "src",
+      "purpose": "Source code",
+      "fileCount": 2,
+      "lastAccessed": 1778328474994,
+      "keyFiles": [
+        "content.config.ts",
+        "env.d.ts"
+      ]
+    },
+    "ui-kit": {
+      "path": "ui-kit",
+      "purpose": null,
+      "fileCount": 3,
+      "lastAccessed": 1778328474994,
+      "keyFiles": [
+        "hacker_green_advanced_components.png",
+        "hacker_green_ui_kit_reference.png",
+        "product_requirements_document.md"
+      ]
+    },
+    "scripts/utils": {
+      "path": "scripts/utils",
+      "purpose": "Utility functions",
+      "fileCount": 1,
+      "lastAccessed": 1778328474996,
+      "keyFiles": [
+        "detect-package-manager.js"
+      ]
+    },
+    "src/assets": {
+      "path": "src/assets",
+      "purpose": "Static assets",
+      "fileCount": 0,
+      "lastAccessed": 1778328474996,
+      "keyFiles": []
+    },
+    "src/components": {
+      "path": "src/components",
+      "purpose": "UI components",
+      "fileCount": 3,
+      "lastAccessed": 1778328474999,
+      "keyFiles": [
+        "Footer.astro",
+        "Header.astro",
+        "ThemeToggle.astro"
+      ]
+    },
+    "src/config": {
+      "path": "src/config",
+      "purpose": "Configuration files",
+      "fileCount": 2,
+      "lastAccessed": 1778328474999,
+      "keyFiles": [
+        "siteSettings.json.ts",
+        "translationData.json.ts"
+      ]
+    },
+    "src/data": {
+      "path": "src/data",
+      "purpose": "Data files",
+      "fileCount": 0,
+      "lastAccessed": 1778328475000,
+      "keyFiles": []
+    },
+    "src/pages": {
+      "path": "src/pages",
+      "purpose": "Page components",
+      "fileCount": 13,
+      "lastAccessed": 1778328475001,
+      "keyFiles": [
+        "404.astro",
+        "[...page].astro",
+        "about.astro"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "src/styles/global.css",
+      "accessCount": 10,
+      "lastAccessed": 1778331109209,
+      "type": "file"
+    },
+    {
+      "path": "src/pages/services.astro",
+      "accessCount": 5,
+      "lastAccessed": 1778331203855,
+      "type": "file"
+    },
+    {
+      "path": "src/components/Header.astro",
+      "accessCount": 5,
+      "lastAccessed": 1778331224572,
+      "type": "file"
+    },
+    {
+      "path": "astro.config.mjs",
+      "accessCount": 4,
+      "lastAccessed": 1778329946437,
+      "type": "file"
+    },
+    {
+      "path": "src/layouts/Base.astro",
+      "accessCount": 3,
+      "lastAccessed": 1778331138521,
+      "type": "file"
+    },
+    {
+      "path": "setup-cloudflare-pages.sh",
+      "accessCount": 2,
+      "lastAccessed": 1778329617741,
+      "type": "file"
+    },
+    {
+      "path": "wrangler.toml",
+      "accessCount": 2,
+      "lastAccessed": 1778330080777,
+      "type": "file"
+    },
+    {
+      "path": "tailwind.config.mjs",
+      "accessCount": 2,
+      "lastAccessed": 1778331119676,
+      "type": "file"
+    },
+    {
+      "path": "Dockerfile",
+      "accessCount": 1,
+      "lastAccessed": 1778329524306,
+      "type": "file"
+    },
+    {
+      "path": "keystatic.config.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1778329742954,
+      "type": "file"
+    },
+    {
+      "path": "src/pages/[...page].astro",
+      "accessCount": 1,
+      "lastAccessed": 1778329844364,
+      "type": "file"
+    },
+    {
+      "path": "src/pages/api/contact.ts",
+      "accessCount": 1,
+      "lastAccessed": 1778329848197,
+      "type": "file"
+    },
+    {
+      "path": "src/pages/sign-in.astro",
+      "accessCount": 1,
+      "lastAccessed": 1778329848655,
+      "type": "file"
+    },
+    {
+      "path": "src/pages/api/health.ts",
+      "accessCount": 1,
+      "lastAccessed": 1778329848918,
+      "type": "file"
+    },
+    {
+      "path": "src/pages/api/live.ts",
+      "accessCount": 1,
+      "lastAccessed": 1778329898913,
+      "type": "file"
+    },
+    {
+      "path": "src/pages/index.astro",
+      "accessCount": 1,
+      "lastAccessed": 1778330266585,
+      "type": "file"
+    },
+    {
+      "path": "src/config/en/siteData.json.ts",
+      "accessCount": 1,
+      "lastAccessed": 1778330267183,
+      "type": "file"
+    },
+    {
+      "path": "src/styles/mos.css",
+      "accessCount": 1,
+      "lastAccessed": 1778330272991,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

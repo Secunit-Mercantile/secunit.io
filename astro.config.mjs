@@ -4,14 +4,10 @@ import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
 import mdx from "@astrojs/mdx";
 import icon from "astro-icon";
-import node from "@astrojs/node";
 
 export default defineConfig({
   site: import.meta.env.ASTRO_SITE_URL || "https://secunit.io",
-  output: "server",
-  adapter: node({
-    mode: "standalone",
-  }),
+  output: "static",
   i18n: {
     defaultLocale: "en",
     locales: ["en", "fr"],

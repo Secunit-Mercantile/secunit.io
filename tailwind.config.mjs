@@ -33,8 +33,8 @@ export default {
 
         // Text shades
         "text-primary": "#ffffff",
-        "text-secondary": "#a0a0a0",
-        "text-tertiary": "#6b6b6b",
+        "text-secondary": "#b4b4b4",
+        "text-tertiary": "#787878",
 
         // Legacy dark mode colors
         darkmode: {
